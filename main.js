@@ -1,6 +1,8 @@
 const express = require('express'),
 morgan = require('morgan'),
 session = require('cookie-session'),
+expressSession = require('express-session'),
+cookieParser = require('cookie-parser'),
 path = require('path'),
 engine = require('ejs'),
 mongoose = require("mongoose");
@@ -29,9 +31,14 @@ app.set('view engine', 'ejs');
 
 //middlewares
 app.use(morgan('dev'));
-app.use(session({
+app.use(cookieParses('mysecretword'))
+app.use(expressSession({
   secret: 'mysecretword',
-  signed: true
+  cookie: {
+    maxAge: 4000000
+  },
+  resave: false,
+  saveUninitialized: false
 }));
 //routes
 app.use(require('./routes/index'));
