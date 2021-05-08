@@ -23,17 +23,16 @@ router.get('/auth/instagram', (req, res) => {
   )
 });
 
-router.get('/handleauth', (req, res) => {
+router.get('/handleauth', async (req, res) => {
   try {
     const code = req.query.code;
-    instagram.authorizeUser(code, redirectURi).then((data) => {
+    const data = await instagram.authorizeUser(code, redirectURi);
       req.session.access_token = data.access_token;
-      req.session.user_id = data.user.id;
+      req.session.user_id = data.user_id;
       console.log("user id: " + data.access_token);
       instagram.config.accessToken = req.session.access_token;
       console.log("Instagram: " + instagram.config);
       res.redirect('/profile');
-    });
   } catch (err) {
     res.json(err);
   }
