@@ -31,6 +31,7 @@ router.get('/handleauth', async (req, res) => {
   req.session.user_id = data.user.id;
 
   instagram.config.accessToken = req.session.access_token;
+  console.log(instagram);
   res.redirect('/profile');
 
   // console.log(instagram);
@@ -49,7 +50,7 @@ router.get('/profile', async(req, res) => {
   try {
     const profileData = await instagram.get('/user/self');
     const media = await instagram.get('users/self/media/recent');
-    res.redirect('profile', {user: profileData.data, posts: media.data});
+    res.render('profile', {user: profileData.data, posts: media.data});
   } catch(e) {
     console.log(e);
   }
