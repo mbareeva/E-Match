@@ -20,6 +20,7 @@ router.get('/auth/instagram', (req, res) => {
       scope: ["user_profile" , "user_media"]
     })
   )
+  res.json(data);
 });
 
 router.get('/handleauth', async (req, res) => {
