@@ -5,7 +5,8 @@ const Instagram = require('node-instagram').default;
 const {clientId, clientSecret} = require('../keys').instagram;
 const instagram = new Instagram({
   clientId: clientId,
-  clientSecret: clientSecret
+  clientSecret: clientSecret,
+  accessToken: accessToken
 })
 let user_id = null;
 
@@ -27,7 +28,6 @@ router.get('/handleauth', async (req, res) => {
   try {
     const code = req.query.code;
     const data = await instagram.authorizeUser(code, redirectURi);
-      req.session.access_token = data.access_token;
       req.session.user_id = data.user_id;
       console.log("user id: " + data.access_token);
       instagram.config.accessToken = req.session.access_token;
@@ -47,8 +47,8 @@ router.get('/profile', async(req, res) => {
   try {
     //const profileData = await instagram.get('users/self');
     console.log("token: " + req.session.access_token);
-    const media = await instagram.get('users/' + req.session.user_id + '/media/recent', {access_token: req.session.access_token});
-    const profileData = await instagram.get('users/'+ req.session.user_id, {access_token: req.session.access_token});
+    const media = await instagram.get('users/' + req.session.user_id + '/media/recent', {access_token: accessToken});
+    const profileData = await instagram.get('users/'+ req.session.user_id, {access_token: accessToken});
     res.render('profile', {user: profileData.data, posts: media.data});
   } catch(e) {
     console.log(e);
