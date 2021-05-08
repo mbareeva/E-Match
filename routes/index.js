@@ -32,7 +32,7 @@ router.get('/handleauth', (req, res) => {
       console.log("user id: " + data.access_token);
       instagram.config.accessToken = req.session.access_token;
       console.log("Instagram: " + instagram.config);
-      res.redirect('/profile/' + user_id);
+      res.redirect('/profile');
     });
   } catch (err) {
     res.json(err);
