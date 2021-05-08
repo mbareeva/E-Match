@@ -47,8 +47,8 @@ router.get('/profile', async(req, res) => {
   try {
     //const profileData = await instagram.get('users/self');
     console.log("token: " + req.session.access_token);
-    const media = await instagram.get('users/' + req.session.user_id + '/media/recent', {access_token: accessToken});
-    const profileData = await instagram.get('users/'+ req.session.user_id, {access_token: accessToken});
+    const media = await instagram.get('users/' + req.session.user_id + '/media/recent', {access_token: instagram.accessToken});
+    const profileData = await instagram.get('users/'+ req.session.user_id, {access_token: instagram.accessToken});
     res.render('profile', {user: profileData.data, posts: media.data});
   } catch(e) {
     console.log(e);
