@@ -31,7 +31,7 @@ app.set('view engine', 'ejs');
 
 //middlewares
 app.use(morgan('dev'));
-app.use(cookieParses('mysecretword'))
+app.use(cookieParser('mysecretword'))
 app.use(expressSession({
   secret: 'mysecretword',
   cookie: {
