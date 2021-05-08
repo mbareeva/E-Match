@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
   res.render('index');
 });
 
-const redirectURi = 'https://e-match-htw.herokuapp.com/';
+const redirectURi = 'https://e-match-htw.herokuapp.com/handleauth';
 
 router.get('/auth/instagram', (req, res) => {
   res.redirect(
