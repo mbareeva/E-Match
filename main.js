@@ -40,6 +40,13 @@ app.use(expressSession({
   resave: false,
   saveUninitialized: false
 }));
+
+app.use((req, res, next) => {
+  res.locals.session = req.session;
+  console.log(req.session.access_token)
+  next();
+});
+
 //routes
 app.use(require('./routes/index'));
 
