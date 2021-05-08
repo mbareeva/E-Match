@@ -1,0 +1,32 @@
+{
+  "name": "e-match",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "dev": "nodemon main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mbareeva/E-Match.git"
+  },
+  "author": "Mayya Bareeva",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mbareeva/E-Match/issues"
+  },
+  "homepage": "https://github.com/mbareeva/E-Match#readme",
+  "dependencies": {
+    "cookie-session": "^1.4.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "express-ejs-layouts": "^2.5.0",
+    "http-status-codes": "^2.1.4",
+    "mongoose": "^5.12.7",
+    "morgan": "^1.10.0",
+    "node-instagram": "^4.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
