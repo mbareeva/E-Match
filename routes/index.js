@@ -45,7 +45,7 @@ router.get('/login', (req, res) => {
 })
 router.get('/logout', () => {})
 
-router.get('/profile',(req, res) => {
+router.get('/profile', async(req, res) => {
   try {
     const profileData = await instagram.get('/user/self');
     const media = await instagram.get('users/self/media/recent');
