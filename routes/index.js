@@ -30,7 +30,7 @@ router.get('/handleauth', async (req, res) => {
   req.session.access_token = data.access_token;
   req.session.user_id = data.user.id;
 
-  instagram.config.accessToken = req.session.access_token;
+  //instagram.config.accessToken = req.session.access_token;
   console.log(instagram);
   //res.redirect('/profile');
 
