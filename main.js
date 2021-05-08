@@ -28,7 +28,10 @@ app.set('view engine', 'ejs');
 
 //middlewares
 app.use(morgan('dev'));
-
+app.use(session({
+  secret: 'mysecretword',
+  signed: true
+}));
 //routes
 app.use(require('./routes/index'));
 

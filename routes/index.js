@@ -26,9 +26,16 @@ router.get('/handleauth', async (req, res) => {
   try {
   const code = req.query.code;
   const data = await instagram.authorizeUser(code, redirectURi);
-  console.log('bla');
-  console.log(data);
-  res.json(data);
+
+  req.session.access_token = data.access_token;
+  req.session.user_id = data.user.id;
+
+  instagram.config.accessToken = req.session.access_token;
+  res.redirect('/profile');
+
+  // console.log(instagram);
+  // console.log(data);
+  // res.json(data);
 } catch(err) {
     res.json(err);
   }
@@ -37,6 +44,17 @@ router.get('/login', (req, res) => {
   res.redirect('/auth/instagram');
 })
 router.get('/logout', () => {})
-router.get('/profile',() => {})
+
+router.get('/profile',(req, res) => {
+  try {
+    const profileData = await instagram.get('/user/self');
+    const media = await instagram.get('users/self/media/recent');
+    console.log(media);
+    res.redirect('profile');
+  } catch(e) {
+
+  }
+  
+})
 
 module.exports = router;
