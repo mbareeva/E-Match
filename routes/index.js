@@ -7,6 +7,7 @@ const instagram = new Instagram({
   clientId: clientId,
   clientSecret: clientSecret
 })
+let user_id = null;
 
 router.get('/', (req, res) => {
   res.render('index');
@@ -24,25 +25,20 @@ router.get('/auth/instagram', (req, res) => {
 
 router.get('/handleauth', (req, res) => {
   try {
-  const code = req.query.code;
- instagram.authorizeUser(code, redirectURi).then((data) => {
-  //req.session.access_token = data.access_token;
- // req.session.user_id = data.user.id;
- console.log("user id" + data.access_token);
- //instagram.config.accessToken = req.session.access_token;
- console.log("Instagram" + instagram);
- res.redirect('/profile');
-
- // console.log(instagram);
- // console.log(data);
-  //res.json(data);
- });
-
-
-} catch(err) {
+    const code = req.query.code;
+    instagram.authorizeUser(code, redirectURi).then((data) => {
+      req.session.access_token = data.access_token;
+      req.session.user_id = data.user.id;
+      console.log("user id: " + data.access_token);
+      instagram.config.accessToken = req.session.access_token;
+      console.log("Instagram: " + instagram.config);
+      res.redirect('/profile/' + user_id);
+    });
+  } catch (err) {
     res.json(err);
   }
 });
+
 router.get('/login', (req, res) => {
   res.redirect('/auth/instagram');
 })
@@ -50,7 +46,7 @@ router.get('/logout', () => {})
 
 router.get('/profile', async(req, res) => {
   try {
-    const profileData = await instagram.get('/user/self');
+    const profileData = await instagram.get('users/self');
     const media = await instagram.get('users/self/media/recent');
     res.render('profile', {user: profileData.data, posts: media.data});
   } catch(e) {
