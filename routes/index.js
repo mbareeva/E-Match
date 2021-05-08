@@ -49,10 +49,9 @@ router.get('/profile', async(req, res) => {
   try {
     const profileData = await instagram.get('/user/self');
     const media = await instagram.get('users/self/media/recent');
-    console.log(media);
-    res.redirect('profile');
+    res.redirect('profile', {user: profileData.data, posts: media.data});
   } catch(e) {
-
+    console.log(e);
   }
   
 })

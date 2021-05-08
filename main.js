@@ -21,6 +21,7 @@ app.use(express.urlencoded({
 
 app.use(express.json());
 app.set("port", process.env.PORT || 3000);
+console.log(process.env.PORT);
 console.log(__dirname);
 app.set('views', path.join(__dirname, 'views'));
 //app.engine('ejs', engine);
