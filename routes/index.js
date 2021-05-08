@@ -27,6 +27,8 @@ router.get('/handleauth', async (req, res) => {
   try {
   const code = req.query.code;
   const data = await instagram.authorizeUser(code, redirectURi);
+  console.log('bla');
+  console.log(data);
   res.json(data);
 } catch(err) {
     res.json(err);
