@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const Instagram = require('node-instagram').default;
-const {clientId, clientSecret} = require('../keys').instagram;
+const {clientId, clientSecret, accessToken} = require('../keys').instagram;
 const instagram = new Instagram({
   clientId: clientId,
   clientSecret: clientSecret,
