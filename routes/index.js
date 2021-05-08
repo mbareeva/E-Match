@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
   res.render('index');
 });
 
-const redirectURi = 'https://e-match-htw.herokuapp.com/auth/instagram/handleauth';
+const redirectURi = 'https://e-match-htw.herokuapp.com/handleauth';
 
 router.get('/auth/instagram', (req, res) => {
   res.redirect(
@@ -22,7 +22,7 @@ router.get('/auth/instagram', (req, res) => {
   )
 });
 
-router.get('/auth/instagram/handleauth', async (req, res) => {
+router.get('/handleauth', async (req, res) => {
   try {
   const code = req.query.code;
   const data = await instagram.authorizeUser(code, redirectURi);
