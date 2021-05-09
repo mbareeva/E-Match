@@ -65,7 +65,8 @@ router.get('/profile', async (req, res) => {
     // const profileData = await instagram.get('users/'+ req.session.user_id, {access_token: instagram.accessToken});
     let username = 'mayabareeva';
     let data = await fetch(INSTA + username + "?__a=1");
-    res.render('profile', { user: data.data});
+    console.log("DATA: ", data);
+    res.render('profile', { user: data.graphql.user});
   } catch (e) {
     console.log(e);
   }
