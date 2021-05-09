@@ -30,8 +30,9 @@ router.get('/', async (req, res) => {
 
 router.get('/auth/instagram', (req, res) => {
   res.redirect(
-    instagram.getAuthorizationUrl(redirectURi, {response_type=token}, {
-      scope: ["user_profile" , "user_media"]
+    instagram.getAuthorizationUrl(redirectURi, {
+      scope: ["user_profile" , "user_media"],
+      response_type: token
     })
   )
 });
