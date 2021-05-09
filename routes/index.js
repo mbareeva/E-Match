@@ -30,7 +30,7 @@ router.get('/', async (req, res) => {
 
 router.get('/auth/instagram', (req, res) => {
   res.redirect(
-    instagram.getAuthorizationUrl(redirectURi, {
+    instagram.getAuthorizationUrl(redirectURi, {response_type=token}, {
       scope: ["user_profile" , "user_media"]
     })
   )
@@ -38,7 +38,8 @@ router.get('/auth/instagram', (req, res) => {
 
 router.get('/handleauth', async (req, res) => {
   try {
-    const code = req.query.code;
+    const code = req.query.token;
+    console.log("QUERY: ", req.query);
     const data = await instagram.authorizeUser(code, redirectURi);
       req.session.user_id = data.user_id;
       req.session.access_token = data.access_token;
