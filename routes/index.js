@@ -52,9 +52,9 @@ router.get('/handleauth', async (req, res) => {
   }
 });
 
-// router.get('/login', (req, res) => {
-//   res.redirect('/auth/instagram');
-// })
+router.get('/login', (req, res) => {
+  res.redirect('/auth/instagram');
+})
 // router.get('/logout', () => {})
 
 router.get('/profile', async (req, res) => {
