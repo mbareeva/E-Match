@@ -1,9 +1,8 @@
 const mongoose = require("mongoose");
 //const passport = require("passport");
-const mongoosastic = require("mongoosastic");
 //passportLocalMongoose = require("passport-local-mongoose");
 //create a mongoDB model for the mapping
-var User = mongoose.model('User', userSchema);
+
 
 userSchema = mongoose.Schema({
     name: {
@@ -30,7 +29,8 @@ userSchema = mongoose.Schema({
       }
     ],
     username: {
-      type: String
+      type: String,
+      required: true
     },
     email: {
         type: String,
@@ -48,9 +48,9 @@ userSchema.virtual('fullName')
         return `${this.name.firstname} ${this.name.lastname}`;
     });
 
-userSchema.plugin(passportLocalMongoose, {
-    usernameField: "email"
-});
+// userSchema.plugin(passportLocalMongoose, {
+//     usernameField: "email"
+// });
 
 // const auth = process.env.BONSAI_AUTH || "";
 // const port = process.env.BONSAI_PORT || "9200";
@@ -71,5 +71,5 @@ userSchema.plugin(passportLocalMongoose, {
 //     console.log('** elasticsearch mapping created for Users');
 // })
 
-
+var User = mongoose.model('User', userSchema);
 module.exports = mongoose.model("User", userSchema);
