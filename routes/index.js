@@ -4,18 +4,18 @@ const User = require("../models/user");
 //const Instagram = require('node-instagram').default;
 const fetch = require("node-fetch");
 
-const Instagram = require('instagram-web-api')
+const Instagram2 = require('instagram-web-api')
 //const { username, password } = process.env
 const {username, password} = require('../keys');
-const client = new Instagram({ username, password })
 const Insta = require('scraper-instagram');
+const Instagram = require("node-instagram").default;
 const InstaClient = new Insta();
-// const {clientId, clientSecret, accessToken} = require('../keys').instagram;
-// const instagram = new Instagram({
-//   clientId: clientId,
-//   clientSecret: clientSecret,
-//   //accessToken: accessToken
-// })
+const {clientId, clientSecret, accessToken} = require('../keys').instagram;
+const instagram = new Instagram({
+  clientId: clientId,
+  clientSecret: clientSecret,
+  //accessToken: accessToken
+})
 
 // const INSTA = "https://www.instagram.com/";
 const redirectURi = 'https://e-match-htw.herokuapp.com/handleauth';
@@ -29,13 +29,12 @@ router.get('/privacy-policy', (req, res) => {
 });
 
 router.get('/auth/instagram', (req, res) => {
-  client
-  .login()
-  .then(() => {
-    client
-      .getProfile()
-      .then(console.log)
-  })
+  res.redirect(
+    instagram.getAuthorizationUrl(redirectUri, {
+      // an array of scopes
+      scope: ['user_profile', 'user_media']
+    })
+  );
 });
 
 router.get('/handleauth', async (req, res) => {
@@ -56,21 +55,7 @@ router.get('/handleauth', async (req, res) => {
 });
 
 router.get('/login', (req, res) => {
-    // client
-    // .login()
-    // .then((data1) => {
-    //   console.log('Data1: ', data1)
-    //   client
-    //     .getProfile()
-    //     .then(data => {
-    //       console.log("Data: ", data);
-    //       res.json(data)
-    //     });
-    // })
     res.redirect("/auth/instagram");
-    // InstaClient.getProfile('mayabareeva')
-    // .then(profile => console.log("Profile: ", profile))
-    // .catch(err => console.error("Error: ", err));
    
   });
 
