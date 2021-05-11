@@ -24,20 +24,9 @@ router.get('/', (req, res) => {
   res.render('index');
 });
 
-
 router.get('/privacy-policy', (req, res) => {
   res.render('privacy');
 });
-
-
-
-// // router.get('/create', async (req, res) => {
-// //   let username = 'mayabareeva';
-// //   let data = await fetch(INSTA + username + "?__a=1");
-// //   console.log(data);
-// //   res.json(data);
-// // });
-
 
 router.get('/auth/instagram', (req, res) => {
   client
@@ -84,7 +73,6 @@ router.get('/login', (req, res) => {
     // .catch(err => console.error("Error: ", err));
    
   });
-// // router.get('/logout', () => {})
 
 router.get('/profile', async (req, res) => {
   try {
@@ -98,7 +86,5 @@ router.get('/profile', async (req, res) => {
     console.log(e);
   }
 })
-
-
 
 module.exports = router;
