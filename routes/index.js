@@ -1,40 +1,52 @@
 const express = require('express');
 const router = express.Router();
 const User = require("../models/user");
-const Instagram = require('node-instagram').default;
+//const Instagram = require('node-instagram').default;
 const fetch = require("node-fetch");
-const {clientId, clientSecret, accessToken} = require('../keys').instagram;
-const instagram = new Instagram({
-  clientId: clientId,
-  clientSecret: clientSecret,
-  //accessToken: accessToken
-})
 
-const INSTA = "https://www.instagram.com/";
+const Instagram = require('instagram-web-api')
+//const { username, password } = process.env
+const {username, password} = require('../keys');
+const client = new Instagram({ username, password })
+const Insta = require('scraper-instagram');
+const InstaClient = new Insta();
+// const {clientId, clientSecret, accessToken} = require('../keys').instagram;
+// const instagram = new Instagram({
+//   clientId: clientId,
+//   clientSecret: clientSecret,
+//   //accessToken: accessToken
+// })
+
+// const INSTA = "https://www.instagram.com/";
 const redirectURi = 'https://e-match-htw.herokuapp.com/handleauth';
 
-router.get('/', async (req, res) => {
-  // let username = 'mayabareeva';
-  // let data = await fetch(INSTA + username + "?__a=1");
-  // res.json(data);
+router.get('/', (req, res) => {
   res.render('index');
 });
 
-// router.get('/create', async (req, res) => {
-//   let username = 'mayabareeva';
-//   let data = await fetch(INSTA + username + "?__a=1");
-//   console.log(data);
-//   res.json(data);
-// });
+
+router.get('/privacy-policy', (req, res) => {
+  res.render('privacy');
+});
+
+
+
+// // router.get('/create', async (req, res) => {
+// //   let username = 'mayabareeva';
+// //   let data = await fetch(INSTA + username + "?__a=1");
+// //   console.log(data);
+// //   res.json(data);
+// // });
 
 
 router.get('/auth/instagram', (req, res) => {
-  res.redirect(
-    instagram.getAuthorizationUrl(redirectURi, {
-      scope: ["user_profile" , "user_media"],
-      response_type: 'token'
-    })
-  )
+  client
+  .login()
+  .then(() => {
+    client
+      .getProfile()
+      .then(console.log)
+  })
 });
 
 router.get('/handleauth', async (req, res) => {
@@ -55,20 +67,33 @@ router.get('/handleauth', async (req, res) => {
 });
 
 router.get('/login', (req, res) => {
-  res.redirect('/auth/instagram');
-})
-// router.get('/logout', () => {})
+    // client
+    // .login()
+    // .then((data1) => {
+    //   console.log('Data1: ', data1)
+    //   client
+    //     .getProfile()
+    //     .then(data => {
+    //       console.log("Data: ", data);
+    //       res.json(data)
+    //     });
+    // })
+    res.redirect("/auth/instagram");
+    // InstaClient.getProfile('mayabareeva')
+    // .then(profile => console.log("Profile: ", profile))
+    // .catch(err => console.error("Error: ", err));
+   
+  });
+// // router.get('/logout', () => {})
 
 router.get('/profile', async (req, res) => {
   try {
-    //const profileData = await instagram.get('users/self');
+    const profileData = await instagram.get('users/self');
+    const media = await instagram.get('users/self/media/recent');
     console.log("token: " + req.session.access_token);
-    // const media = await instagram.get('users/' + req.session.user_id + '/media/recent', {access_token: instagram.accessToken});
+    //const media = await instagram.get('users/' + req.session.user_id + '/media/recent', {access_token: instagram.accessToken});
     // const profileData = await instagram.get('users/'+ req.session.user_id, {access_token: instagram.accessToken});
-    let username = 'mayabareeva';
-    let data = await fetch(INSTA + username + "?__a=1");
-    console.log("DATA: ", data);
-    res.render('profile', { user: data.graphql.user});
+    res.render("profile", { user: profileData.data, posts: media.data});
   } catch (e) {
     console.log(e);
   }
