@@ -67,12 +67,28 @@ router.get('/response', async (req, res) => {
   })
 })
 
-router.get('/handleauth', (req, res) => {
+router.get('/handleauth', async (req, res) => {
   try {
     let code = req.query;
     console.log(code);
-    res.locals.code = code.code;
-    res.redirect('access')
+    let axios = require('axios');
+  var data = qs.stringify({
+    'client_id': clientId,
+    'grant_type': 'authorization_code',
+    'code': code.de,
+    'client_secret': clientSecret,
+    'redirect_uri': redirectUri
+  });
+  var config = {
+    method: 'post',
+    url: 'https://api.instagram.com/oauth/access_token',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    data: data
+  };
+  let user_data = await axios(config);
+  res.json(user_data);
   } catch (err) {
     res.json(err);
   }
