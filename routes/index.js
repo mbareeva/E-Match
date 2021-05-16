@@ -6,6 +6,7 @@ const Insta = require('scraper-instagram');
 const Instagram = require("node-instagram").default;
 var qs = require('qs');
 const {clientId, clientSecret, testUsers} = require('../keys').instagram;
+const { default: axios } = require('axios');
 const instagram = new Instagram({
   clientId: clientId,
   clientSecret: clientSecret,
@@ -26,19 +27,21 @@ router.get('/privacy-policy', (req, res) => {
 router.get('/auth/instagram', (req, res) => {
   res.redirect(
     instagram.getAuthorizationUrl(redirectUri, {
-      scope: ['user_profile']
+      scope: ['user_profile', 'user_media']
     })
   );
 });
 
-router.get('/oath/authorize', (req, res) => {
-  let auth_code = {
-    method: 'get',
-    url: 'https://api.instagram.com/oauth/authorize?client_id=' + clientId +
-      '&redirect_uri=' + redirectUri +
-      '&scope=user_profile,user_media&response_type=code',
-  };
-})
+// router.get('/auth/instagram', async (req, res) => {
+//   let auth_code = {
+//     method: 'get',
+//     url: 'https://api.instagram.com/oauth/authorize?client_id=' + clientId +
+//       '&redirect_uri=' + redirectUri +
+//       '&scope=user_profile,user_media&response_type=code',
+//   };
+
+//   let responseCode = await axios(auth_code);
+// })
 
 router.get('/response', async (req, res) => {
   let axios = require('axios');
@@ -68,36 +71,9 @@ router.get('/response', async (req, res) => {
 })
 
 router.get('/handleauth', async (req, res) => {
-  try {
-    let code = req.query;
-    console.log(code);
-    let axios = require('axios');
-  var data = qs.stringify({
-    'client_id': clientId,
-    'grant_type': 'authorization_code',
-    'code': code.code,
-    'client_secret': clientSecret,
-    'redirect_uri': redirectUri
-  });
-  var config = {
-    method: 'post',
-    url: 'https://api.instagram.com/oauth/access_token',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    data: data
-  };
-  let user_data = await axios(config);
-  res.json(user_data);
-  } catch (err) {
-    res.json(err);
-  }
-});
-
-router.get('/access', async (req, res) => {
-  console.log("Req locals: ", req.code);
-  let code = req.code;
-  console.log("Code: ", code);
+  let code = req.query;
+  req.session.code = code;
+  console.log("Should be code: ", req.session.code);
   let axios = require('axios');
   var data = qs.stringify({
     'client_id': clientId,
@@ -115,8 +91,39 @@ router.get('/access', async (req, res) => {
     data: data
   };
   let user_data = await axios(config);
-  res.json(user_data);
+  req.session.access_token = user_data.access_token;
+  req.session.user_id = user_data.user.id;
+  console.log("Should be access token: ", user_data);
+  console.log("Should be session access token: ", req.session.access_token);
+  res.redirect("/response");
 })
+
+// router.get('/access', async (req, res) => {
+//   console.log("Req locals: ", req.code);
+//   let code = req.code;
+//   console.log("Code: ", code);
+//   let axios = require('axios');
+//   var data = qs.stringify({
+//     'client_id': clientId,
+//     'grant_type': 'authorization_code',
+//     'code': code,
+//     'client_secret': clientSecret,
+//     'redirect_uri': redirectUri
+//   });
+//   var config = {
+//     method: 'post',
+//     url: 'https://api.instagram.com/oauth/access_token',
+//     headers: {
+//       'Content-Type': 'application/x-www-form-urlencoded'
+//     },
+//     data: data
+//   };
+//   let user_data = await axios(config);
+//   req.session.access_token = user_data.access_token;
+//   req.session.user_id = user_data.user.id;
+//   console.log("Should be access token: ", user_data);
+//   res.redirect("/user");
+// })
 router.get('/login', (req, res) => {
     res.redirect("/auth/instagram");
   });
