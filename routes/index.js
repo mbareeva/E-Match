@@ -71,30 +71,36 @@ router.get('/handleauth', async (req, res) => {
   try {
     const code = req.query;
     console.log(code);
-    let axios = require('axios');
-    var data = qs.stringify({
-      'client_id': clientId,
-      'grant_type': 'authorization_code',
-      'code': code.code,
-      'client_secret': clientSecret,
-      'redirect_uri': redirectUri
-    });
-    var config = {
-      method: 'post',
-      url: 'https://api.instagram.com/oauth/access_token',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      data: data
-    };
-    let user_data = await axios(config);
-
-    res.json(user_data);
+    res.json(code);
+    res.redirect('access', {
+      code: code.code
+    })
   } catch (err) {
     res.json(err);
   }
 });
 
+router.get('/access', (req, res) => {
+  let code = req.code;
+  console.log("Code: ", code);
+  let axios = require('axios');
+  var data = qs.stringify({
+    'client_id': clientId,
+    'grant_type': 'authorization_code',
+    'code': code,
+    'client_secret': clientSecret,
+    'redirect_uri': redirectUri
+  });
+  var config = {
+    method: 'post',
+    url: 'https://api.instagram.com/oauth/access_token',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    data: data
+  };
+  let user_data = await axios(config);
+})
 router.get('/login', (req, res) => {
     res.redirect("/auth/instagram");
   });
