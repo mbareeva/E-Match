@@ -34,6 +34,7 @@
     "node-fetch": "^2.6.1",
     "node-instagram": "^4.3.0",
     "prompts": "^2.4.1",
+    "qs": "^6.10.1",
     "request-promise": "^4.2.6",
     "scraper-instagram": "^1.0.17"
   },
