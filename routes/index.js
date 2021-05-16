@@ -45,7 +45,10 @@ router.get('/auth/instagram', (req, res) => {
 
 router.get('/response', async (req, res) => {
   let axios = require('axios');
-
+  let userid_test = req.session.user_id;
+  let accesstoken_test = req.session.access_token;
+  console.log("Saved user id: ", userid_test);
+  console.log("Saved access token: ", accesstoken_test);
   let media = {
     method: 'get',
     url: 'https://graph.instagram.com/me/media?fields=id,caption,media_url,timestamp&access_token=' + testUsers[0].accessToken,
