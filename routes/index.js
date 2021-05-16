@@ -91,9 +91,9 @@ router.get('/handleauth', async (req, res) => {
     data: data
   };
   let user_data = await axios(config);
-  req.session.access_token = user_data.access_token;
-  req.session.user_id = user_data.user_id;
-  console.log("Should be access token: ", user_data);
+  req.session.access_token = user_data.data.access_token;
+  req.session.user_id = user_data.data.user_id;
+  console.log("Should be user id: ", req.session.user_id);
   console.log("Should be session access token: ", req.session.access_token);
   res.redirect("/response");
 })
