@@ -75,7 +75,7 @@ router.get('/handleauth', async (req, res) => {
   var data = qs.stringify({
     'client_id': clientId,
     'grant_type': 'authorization_code',
-    'code': code.de,
+    'code': code.code,
     'client_secret': clientSecret,
     'redirect_uri': redirectUri
   });
