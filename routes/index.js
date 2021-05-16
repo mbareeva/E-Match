@@ -51,17 +51,17 @@ router.get('/response', async (req, res) => {
   console.log("Saved access token: ", accesstoken_test);
   let media = {
     method: 'get',
-    url: 'https://graph.instagram.com/me/media?fields=id,caption,media_url,timestamp&access_token=' + testUsers[0].accessToken,
+    url: 'https://graph.instagram.com/me/media?fields=id,caption,media_url,timestamp&access_token=' + accesstoken_test,
     headers: {
-      'Authorization': 'Bearer' + testUsers[0].accessToken
+      'Authorization': 'Bearer' + accesstoken_test
     }
   };
 
   let profile = {
     method: 'get',
-    url: 'https://graph.instagram.com/me?fields=id,username,account_type,media_count&access_token=' + testUsers[0].accessToken,
+    url: 'https://graph.instagram.com/me?fields=id,username,account_type,media_count&access_token=' + accesstoken_test,
     headers: {
-      'Authorization': 'Bearer' + testUsers[0].accessToken
+      'Authorization': 'Bearer' + accesstoken_test
     }
   };
 
