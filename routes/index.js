@@ -67,7 +67,7 @@ router.get('/response', async (req, res) => {
   })
 })
 
-router.get('/handleauth', async (req, res) => {
+router.get('/handleauth', (req, res) => {
   try {
     const code = req.query;
     console.log(code);
@@ -80,7 +80,7 @@ router.get('/handleauth', async (req, res) => {
   }
 });
 
-router.get('/access', (req, res) => {
+router.get('/access', async (req, res) => {
   let code = req.code;
   console.log("Code: ", code);
   let axios = require('axios');
