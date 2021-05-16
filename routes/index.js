@@ -11,6 +11,7 @@ const instagram = new Instagram({
   clientSecret: clientSecret,
   //accessToken: accessToken
 })
+let code = null;
 
 const instaURL = "https://api.instagram.com/";
 const redirectUri = 'https://e-match-htw.herokuapp.com/handleauth';
@@ -69,19 +70,17 @@ router.get('/response', async (req, res) => {
 
 router.get('/handleauth', (req, res) => {
   try {
-    const code = req.query;
+    code = req.query;
     console.log(code);
     //res.json(code);
-    res.redirect('access', {
-      code: code.code
-    })
+    res.redirect('access')
   } catch (err) {
     res.json(err);
   }
 });
 
 router.get('/access', async (req, res) => {
-  let code = req.code;
+  let code = code.code;
   console.log("Code: ", code);
   let axios = require('axios');
   var data = qs.stringify({
