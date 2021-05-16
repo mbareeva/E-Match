@@ -79,9 +79,8 @@ router.get('/handleauth', (req, res) => {
 });
 
 router.get('/access', async (req, res) => {
-  console.log("Res locals: ", req.locals.code);
   console.log("Req locals: ", req.code);
-  let code = req.locals.code;
+  let code = req.code;
   console.log("Code: ", code);
   let axios = require('axios');
   var data = qs.stringify({
