@@ -71,7 +71,7 @@ router.get('/handleauth', (req, res) => {
   try {
     const code = req.query;
     console.log(code);
-    res.json(code);
+    //res.json(code);
     res.redirect('access', {
       code: code.code
     })
