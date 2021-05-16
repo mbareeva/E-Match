@@ -100,6 +100,7 @@ router.get('/access', (req, res) => {
     data: data
   };
   let user_data = await axios(config);
+  res.json(user_data);
 })
 router.get('/login', (req, res) => {
     res.redirect("/auth/instagram");
