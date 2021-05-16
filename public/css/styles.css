@@ -1,0 +1,28 @@
+body{
+  margin: 20px;
+  background: #6267E7 !important;
+  font-family: 'Raleway';
+}
+
+.input-fields {
+  width: 50%;
+  margin: 25%;
+}
+
+.form-label {
+  color: white;
+  margin-bottom: 20px;
+}
+
+
+.form-check {
+  padding: 10px 2px 10px 30px;
+    margin: 5px;
+    background: white;
+    width: 70%;
+    border-radius: 5px;
+}
+
+.category {
+  color: white;
+}

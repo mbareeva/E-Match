@@ -4,7 +4,7 @@ session = require('cookie-session'),
 expressSession = require('express-session'),
 cookieParser = require('cookie-parser'),
 path = require('path'),
-engine = require('ejs'),
+layouts = require('express-ejs-layouts'),
 mongoose = require("mongoose");
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/e-match", 
   {
@@ -23,11 +23,11 @@ app.use(express.urlencoded({
 
 app.use(express.json());
 app.set("port", process.env.PORT || 3000);
-console.log(process.env.PORT);
-console.log(__dirname);
-app.set('views', path.join(__dirname, 'views'));
 //app.engine('ejs', engine);
 app.set('view engine', 'ejs');
+app.use(layouts);
+//defines the folder for static files (css f.e.)
+app.use(express.static(path.join(__dirname, 'public')));
 
 //middlewares
 app.use(morgan('dev'));

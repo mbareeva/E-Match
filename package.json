@@ -18,6 +18,7 @@
   "homepage": "https://github.com/mbareeva/E-Match#readme",
   "dependencies": {
     "axios": "^0.21.1",
+    "bootstrap": "^5.0.1",
     "cheerio": "^1.0.0-rc.9",
     "cookie-parser": "^1.4.5",
     "cookie-session": "^1.4.0",
