@@ -1,19 +1,21 @@
 const express = require('express');
 const router = express.Router();
 const User = require("../models/user");
-const fetch = require("node-fetch");
-const Insta = require('scraper-instagram');
 const Instagram = require("node-instagram").default;
-var qs = require('qs');
-const {clientId, clientSecret, testUsers} = require('../keys').instagram;
-const { default: axios } = require('axios');
+const axios = require('axios');
+const qs = require('qs');
+
+
+const {clientId, clientSecret} = require('../keys').instagram;
+
+// node instagram package for authorization
 const instagram = new Instagram({
   clientId: clientId,
-  clientSecret: clientSecret,
-  //accessToken: accessToken
+  clientSecret: clientSecret
 })
 
-const instaURL = "https://api.instagram.com/";
+const INSTA_URL_ACCESS_TOKEN = 'https://api.instagram.com/oauth/access_token';
+const INSTA_URL_GRAPH = 'https://graph.instagram.com/me';
 const redirectUri = 'https://e-match-htw.herokuapp.com/handleauth';
 
 router.get('/', (req, res) => {
@@ -24,6 +26,10 @@ router.get('/privacy-policy', (req, res) => {
   res.render('privacy');
 });
 
+/**
+ * Authorize a user with a help of authorization window from Instagram.
+ * If the authorization is successful, the code is generated.
+ */
 router.get('/auth/instagram', (req, res) => {
   res.redirect(
     instagram.getAuthorizationUrl(redirectUri, {
@@ -32,26 +38,17 @@ router.get('/auth/instagram', (req, res) => {
   );
 });
 
-// router.get('/auth/instagram', async (req, res) => {
-//   let auth_code = {
-//     method: 'get',
-//     url: 'https://api.instagram.com/oauth/authorize?client_id=' + clientId +
-//       '&redirect_uri=' + redirectUri +
-//       '&scope=user_profile,user_media&response_type=code',
-//   };
-
-//   let responseCode = await axios(auth_code);
-// })
-
+/**
+ * Renders the page of successully authentificated user via instagram.
+ */
 router.get('/response', async (req, res) => {
-  let axios = require('axios');
   let userid_test = req.session.user_id;
   let accesstoken_test = req.session.access_token;
   console.log("Saved user id: ", userid_test);
   console.log("Saved access token: ", accesstoken_test);
   let media = {
     method: 'get',
-    url: 'https://graph.instagram.com/me/media?fields=id,caption,media_url,timestamp&access_token=' + accesstoken_test,
+    url: INSTA_URL_GRAPH + '/media?fields=id,caption,media_url,timestamp&access_token=' + accesstoken_test,
     headers: {
       'Authorization': 'Bearer' + accesstoken_test
     }
@@ -59,12 +56,11 @@ router.get('/response', async (req, res) => {
 
   let profile = {
     method: 'get',
-    url: 'https://graph.instagram.com/me?fields=id,username,account_type,media_count&access_token=' + accesstoken_test,
+    url: INSTA_URL_GRAPH + '?fields=id,username,account_type,media_count&access_token=' + accesstoken_test,
     headers: {
       'Authorization': 'Bearer' + accesstoken_test
     }
   };
-
   const profileData = await axios(profile);
   const mediaData = await axios(media);
   res.render('profile', {
@@ -73,11 +69,14 @@ router.get('/response', async (req, res) => {
   })
 })
 
+/**
+ * Exchanges the generated code for a token 
+ * that will allow the access to user's data e.g.
+ * user id, username and media data.
+ */
 router.get('/handleauth', async (req, res) => {
   let code = req.query;
   req.session.code = code;
-  console.log("Should be code: ", req.session.code);
-  let axios = require('axios');
   var data = qs.stringify({
     'client_id': clientId,
     'grant_type': 'authorization_code',
@@ -87,7 +86,7 @@ router.get('/handleauth', async (req, res) => {
   });
   var config = {
     method: 'post',
-    url: 'https://api.instagram.com/oauth/access_token',
+    url: INSTA_URL_ACCESS_TOKEN,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     },
@@ -101,32 +100,6 @@ router.get('/handleauth', async (req, res) => {
   res.redirect("/response");
 })
 
-// router.get('/access', async (req, res) => {
-//   console.log("Req locals: ", req.code);
-//   let code = req.code;
-//   console.log("Code: ", code);
-//   let axios = require('axios');
-//   var data = qs.stringify({
-//     'client_id': clientId,
-//     'grant_type': 'authorization_code',
-//     'code': code,
-//     'client_secret': clientSecret,
-//     'redirect_uri': redirectUri
-//   });
-//   var config = {
-//     method: 'post',
-//     url: 'https://api.instagram.com/oauth/access_token',
-//     headers: {
-//       'Content-Type': 'application/x-www-form-urlencoded'
-//     },
-//     data: data
-//   };
-//   let user_data = await axios(config);
-//   req.session.access_token = user_data.access_token;
-//   req.session.user_id = user_data.user.id;
-//   console.log("Should be access token: ", user_data);
-//   res.redirect("/user");
-// })
 router.get('/login', (req, res) => {
     res.redirect("/auth/instagram");
   });
