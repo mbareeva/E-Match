@@ -68,7 +68,7 @@ router.get('/response', async (req, res) => {
 
 router.get('/handleauth', async (req, res) => {
   try {
-    const code = req.query.token;
+    const code = req.query;
     res.json(code);
   } catch (err) {
     res.json(err);
