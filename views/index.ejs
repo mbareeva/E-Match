@@ -1,89 +1,80 @@
 <div id="carouselExampleControls" class="carousel slide" data-interval="false">
-  <form>
+  <form action="/users/create" method="post">
   <div class="carousel-inner input-fields">
     <div class="carousel-item active">
-      <label for="basic-url" class="form-label">Whats's your username?</label>
       <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="basic-addon1">@</span>
-        </div>
-        <input type="text" class="form-control" placeholder="Username" aria-label="username"
-          aria-describedby="basic-addon1">
-
           <div class="col-md-4 offset-md-4">
             <div class="card text-center mt-4">
-              <div class="card-body"> 
-                <a href="/login" class="btn btn-primary btn-block mt-4">
-                  Or Login with Instagram
+              <% if(!userFB) { %>
+              <a href="/login/facebook" class="btn btn-primary btn-block">
+                Login with Facebook
+              </a>
+              <% } else { %>
+                <a href="/login/facebook" class="btn btn-primary btn-block">
+                  Succesfuly authorized via FB!
                 </a>
-              </div>
+              <% } %>
             </div>
           </div>
       </div>
     </div>
+   
     
     <div class="carousel-item">
       <label for="basic-url" class="form-label">Whats's your location?</label>
-      <input type="text" class="form-control" placeholder="Location" aria-label="location"
+      <input type="text" class="form-control" name="location" placeholder="Location" aria-label="location"
         aria-describedby="basic-addon1">
 
-    </div>
-    
-    <div class="carousel-item">
-      <label for="basic-url" class="form-label">Whats's your bio?</label>
-      <div class="form-group">
-        <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="bio">
-      </div>
     </div>
 
     <div class="carousel-item">
       <label for="basic-url" class="form-label">Category of your profile?</label>
-      <p class="category">Please, choose several categories:</p>
+      <p class="category">Please, choose one category:</p>
 
       <div class="form-group">
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"  checked>
+          <input class="form-check-input" type="radio" value="Personal blog" name="profileCategory" id="flexRadioDefault1"  checked>
           <label class="form-check-label" for="flexRadioDefault1">
             Personal blog
           </label>
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+          <input class="form-check-input" type="radio" value="Product/Service" name="profileCategory" id="flexRadioDefault2">
           <label class="form-check-label" for="flexRadioDefault2">
             Product/Service
           </label>
         </div>
 
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+          <input class="form-check-input" type="radio" value="Art" name="profileCategory" id="flexRadioDefault2">
           <label class="form-check-label" for="flexRadioDefault2">
             Art
           </label>
         </div>
 
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+          <input class="form-check-input" type="radio" value="Musician/Band" name="profileCategory" id="flexRadioDefault2">
           <label class="form-check-label" for="flexRadioDefault2">
             Musician/Band
           </label>
         </div>
 
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+          <input class="form-check-input" type="radio" value="Shopping & Retail" name="profileCategory" id="flexRadioDefault2">
           <label class="form-check-label" for="flexRadioDefault2">
-            Shoppin & Retail
+            Shopping & Retail
           </label>
         </div>
 
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+          <input class="form-check-input" type="radio" value="Health & Beauty" name="profileCategory" id="flexRadioDefault2">
           <label class="form-check-label" for="flexRadioDefault2">
             Health & Beauty
           </label>
         </div>
 
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+          <input class="form-check-input" type="radio" value="Grocery Store" name="profileCategory" id="flexRadioDefault2">
           <label class="form-check-label" for="flexRadioDefault2">
             Grocery Store
           </label>
@@ -91,11 +82,76 @@
       </div>
 
     </div>
-
     <div class="carousel-item">
-      <label for="basic-url" class="form-label">Whats's website (if available)?</label>
+      <label for="basic-url" class="form-label">What are your interests/field of specialisation?</label>
+      <p class="category">Please, choose several categories:</p>
+
       <div class="form-group">
-        <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="website">
+        <div class="form-check">
+          <input class="form-check-input" type="radio" value="Business & Industry" name="interest" id="flexRadioDefault1"  checked>
+          <label class="form-check-label" for="flexRadioDefault1">
+            Business and industry
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" value="Entertainment" name="interest" id="flexRadioDefault2">
+          <label class="form-check-label" for="flexRadioDefault2">
+            Entertainment
+          </label>
+        </div>
+
+        <div class="form-check">
+          <input class="form-check-input" type="radio" value="Family & Relationships" name="interest" id="flexRadioDefault2">
+          <label class="form-check-label" for="flexRadioDefault2">
+            Family and relationships
+          </label>
+        </div>
+
+        <div class="form-check">
+          <input class="form-check-input" type="radio" value="Fitness & Wellness" name="interest" id="flexRadioDefault2">
+          <label class="form-check-label" for="flexRadioDefault2">
+            Fitness and wellness
+          </label>
+        </div>
+
+        <div class="form-check">
+          <input class="form-check-input" type="radio" value="Food & Drink" name="interest" id="flexRadioDefault2">
+          <label class="form-check-label" for="flexRadioDefault2">
+            Food and drink
+          </label>
+        </div>
+
+        <div class="form-check">
+          <input class="form-check-input" type="radio" value="Hobbies & Activities" name="interest" id="flexRadioDefault2">
+          <label class="form-check-label" for="flexRadioDefault2">
+            Hobbies and activities
+          </label>
+        </div>
+
+        <div class="form-check">
+          <input class="form-check-input" type="radio" value="Shopping & Fashion" name="interest" id="flexRadioDefault2">
+          <label class="form-check-label" for="flexRadioDefault2">
+            Shopping and fashion
+          </label>
+        </div>
+      </div>
+
+    </div>
+    <div class="carousel-item">
+      <label for="basic-url" class="form-label">Whats's your role?</label>
+      <div class="form-group">
+        <div class="form-check">
+          <input class="form-check-input" type="radio" value="business" name="role" id="flexRadioDefault1"  checked>
+          <label class="form-check-label" for="flexRadioDefault1">
+            I am a businessman/businesswoman.
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" value="influencer" name="role" id="flexRadioDefault2">
+          <label class="form-check-label" for="flexRadioDefault2">
+            I am an influencer.
+          </label>
+        </div>
       </div>
       <div class="col-12">
         <button type="submit" class="btn btn-primary">Sign in</button>

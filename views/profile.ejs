@@ -1,25 +1,28 @@
 
-<div class="row p-2">
-  <div class="col-md-3">
-    <div class="card">
+<div class="col">
+  <div class="row p-3">
+    <div class="card profile-card">
       <div class="card-body text-center">
-        <h5 class="card-title"> <%=user.username%></h5>
+        <h5 class="card-title"> @<%=user.username%></h5>
        
-        <%=user.account_type %>
+        <%=user.biography %>
         <hr/>
-        <%=user.media_count %> <i class="fas fa-camera"></i>
+        <p>Followers:<i class="fas fa-camera"><%=user.followers_count %></i></p>
+        <p>Following:<i class="fas fa-camera"><%=user.follows_count %></i></p>
         
       </div>
     </div>
+    <button type="button" class="btn btn-primary button-matches"> Find matches </button>
   </div>
-  <div class="col-md-9">
+  <div class="col-md-10">
+    <h2 class="media-title"> Media: </h2>
     <div class="row">
-      <% posts.data.forEach(post => { %>
+      <% posts.forEach(post => { %>
       <div class="col-md-4">
         <div class="card mb-2 animated bounceInUp">
-          <div class="card-body">
+          <div class="card-body media">
               <p>Caption: <%= post.caption %></p>
-              <p class="text-muted"><%= post.timestamp %></p>
+              <p class="text-muted">Likes: <%= post.like_count %></p>
           </div>
         </div>
       </div>

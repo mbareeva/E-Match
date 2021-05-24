@@ -1,45 +1,41 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose"),
 //const passport = require("passport");
 //passportLocalMongoose = require("passport-local-mongoose");
 //create a mongoDB model for the mapping
 
 
 userSchema = mongoose.Schema({
-    name: {
-        firstname: {
-            type: String,
-            trim: true
-        },
-        lastname: {
-            type: String,
-            trim: true
-        }
-    },
-    location: {
+  fullname: String,
+  biography: String,
+  followers_count: Number,
+  follows_count: Number,
+  website: String,
+  profileCategory: String,
+  specialisation: String,
+  location: {
+    type: String
+  },
+  latestMedia: [
+    {
+      caption: {
         type: String
-    },
-    latestMedia:[
-      {
-        caption: {
-          type: String
-        },
-        hashtags: [{
-          type: String
-        }]
-      }
-    ],
-    username: {
-      type: String,
-      required: true
-    },
-    email: {
-        type: String,
-        lowercase: true,
-    },
-    matches: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
-    }],
+      },
+      likes: Number
+    }
+  ],
+  username: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  matches: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+  }],
+  role: {
+    type: String,
+    enum: ["business", "influencer"]
+  }
 });
 
 // get the full name of the candidate.
@@ -47,10 +43,6 @@ userSchema.virtual('fullName')
     .get(function () {
         return `${this.name.firstname} ${this.name.lastname}`;
     });
-
-// userSchema.plugin(passportLocalMongoose, {
-//     usernameField: "email"
-// });
 
 // const auth = process.env.BONSAI_AUTH || "";
 // const port = process.env.BONSAI_PORT || "9200";
@@ -63,8 +55,6 @@ userSchema.virtual('fullName')
 //     "auth": auth,
 //     "protocol": protocol,
 // });
-
-
 
 //create a mapping
 // User.createMapping((err, mapping) => {

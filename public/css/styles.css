@@ -26,3 +26,27 @@ body{
 .category {
   color: white;
 }
+
+.btn-primary {
+  background-color: #ffffff;
+  color: #6267e7;
+}
+
+.media {
+  height: 200px !important;
+  overflow: scroll;
+}
+
+.media-title {
+  color: white;
+  margin-top: 10px;
+}
+
+.button-matches {
+  height: 50px;
+  margin: 40px;
+}
+
+.profile-card {
+  width: 30%;
+}
