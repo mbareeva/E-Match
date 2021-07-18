@@ -58,10 +58,11 @@ userSchema.plugin(mongoosastic, {
     "protocol": protocol,
 });
 
+let User = mongoose.model('User', userSchema);
 //create a mapping
 User.createMapping((err, mapping) => {
     console.log('** elasticsearch mapping created for Users');
 })
 
-var User = mongoose.model('User', userSchema);
+
 module.exports = mongoose.model("User", userSchema);
