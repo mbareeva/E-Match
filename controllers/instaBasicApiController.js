@@ -3,6 +3,9 @@ const User = require("../models/user");
 const Instagram = require("node-instagram").default;
 const axios = require('axios');
 const qs = require('qs');
+const { Client } = require('elasticsearch');
+const bonsai = process.env.BONSAI_URL || "http://localhost:9200";
+const client = new Client({ host: bonsai });
 
 const INSTA_URL_ACCESS_TOKEN = 'https://api.instagram.com/oauth/access_token';
 const INSTA_URL_GRAPH = 'https://graph.instagram.com/me';
