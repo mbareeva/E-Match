@@ -11,7 +11,8 @@ const INSTA_URL_ACCESS_TOKEN = 'https://api.instagram.com/oauth/access_token';
 const INSTA_URL_GRAPH = 'https://graph.instagram.com/me';
 const redirectUri = 'https://e-match-htw.herokuapp.com/handleauth';
 
-const {clientId, clientSecret} = require('../keys').instagram;
+const clientId = process.env.CLIENT_ID;
+const clientSecret = process.env.CLIENT_SECRET;
 
 // node instagram package for authorization
 const instagram = new Instagram({
