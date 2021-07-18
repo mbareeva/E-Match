@@ -2,7 +2,7 @@ const User = require("../models/user");
 const axios = require('axios');
 const INSTA_URL_GRAPH = 'https://graph.facebook.com/v10.0/oauth/access_token';
 const redirectUri = 'https://e-match-htw.herokuapp.com/handleauth';
-const addId = process.env.APP_ID;
+const appId = process.env.APP_ID;
 const appSecret = process.env.APP_SECRET;
 
 getUserParams = (body) => {
