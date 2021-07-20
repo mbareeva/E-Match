@@ -117,11 +117,9 @@ exports.index = (req, res, next) => {
       caption: e.caption,
       likes: e.likes
     });
-    mediaContent.save(result => {
-      mediaArrForUser.push(result);
-      console.log("RESULT: ", result);
-    })
-    .catch(err => console.log(err));
+    mediaContent.save();
+    mediaArrForUser.push(mediaContent);
+      console.log("RESULT: ", mediaContent);
   });
   
   console.log("User ID: ", userId);
