@@ -16,14 +16,10 @@ userSchema = mongoose.Schema({
   location: {
     type: String
   },
-  latestMedia: [
-    {
-      caption: {
-        type: String
-      },
-      likes: Number
-    }
-  ],
+  latestMedia: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Media"
+  }],
   username: {
     type: String,
     required: true,
@@ -31,7 +27,7 @@ userSchema = mongoose.Schema({
   },
   matches: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Media"
+    ref: "User"
   }],
   role: {
     type: String,

@@ -109,7 +109,7 @@ exports.create = (req, res) => {
   User.create(user).then((user) => {
     console.log("user: ", user);
     //req.locals.user = user;
-    user.media.push(media);
+    user.latestMedia.push(media);
     user.save();
     res.redirect("/users/profile");
   })
