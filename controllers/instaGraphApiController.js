@@ -15,10 +15,6 @@ getUserParams = (body) => {
       profileCategory: body.profileCategory,
       specialisation: body.interest,
       location: body.location,
-      latestMedia: {
-        caption: body.caption,
-        likes: body.likes
-      },
       username: body.username,
       role: body.role
     }
@@ -133,7 +129,7 @@ exports.index = (req, res, next) => {
   });
   
   console.log("User ID: ", userId);
-  User.findOneAndUpdate({_id: userId}, {$addToSet: {mediaArrForUser} })
+  User.findOneAndUpdate({_id: userId}, {$addToSet: {latestMEdia : mediaArrForUser}}, { new: true })
       .then(user => {
         res.locals.user = user;
         next()
