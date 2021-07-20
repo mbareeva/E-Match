@@ -99,16 +99,12 @@ exports.create = (req, res) => {
   req.body.followers_count = userData.followers_count,
   req.body.website = userData.website,
   req.body.username = userData.username;
-  //req.body.latestMedia = media;
-
-  
 
   let user = getUserParams(req.body);
   User.create(user).then((user) => {
     console.log("********** user **********: ", user);
     res.redirect("/users/profile/" + user._id);
   })
-  .catch(err => console.log("error says: ", err));
 }
 
 
