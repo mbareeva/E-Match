@@ -31,7 +31,7 @@ userSchema = mongoose.Schema({
   },
   matches: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User"
+    ref: "Media"
   }],
   role: {
     type: String,

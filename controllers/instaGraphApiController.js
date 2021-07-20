@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const Media = require("../models/media")
 const axios = require('axios');
 const INSTA_URL_GRAPH = 'https://graph.facebook.com/v10.0/oauth/access_token';
 const redirectUri = 'https://e-match-htw.herokuapp.com/handleauth';
@@ -102,12 +103,14 @@ exports.create = (req, res) => {
   req.body.biography = userData.biography,
   req.body.followers_count = userData.followers_count,
   req.body.website = userData.website,
-  req.body.username = userData.username,
-  req.body.latestMedia = media;
+  req.body.username = userData.username;
+  //req.body.latestMedia = media;
   let user = getUserParams(req.body);
   User.create(user).then((user) => {
     console.log("user: ", user);
     //req.locals.user = user;
+    user.media.push(media);
+    user.save();
     res.redirect("/users/profile");
   })
   .catch(err => console.log("error says: ", err));
