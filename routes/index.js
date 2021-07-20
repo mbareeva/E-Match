@@ -15,5 +15,5 @@ router.get('/login/facebook', instaGraphApiController.loginViaFacebook);
 
 router.get('/handleauth', instaGraphApiController.getAccess);
 router.get('/auth/facebook', instaGraphApiController.getAuthorisationViaFacebook);
-router.get('/users/profile', instaGraphApiController.index, instaGraphApiController.indexView);
+router.get('/users/profile/:id', instaGraphApiController.index, instaGraphApiController.indexView);
 module.exports = router;

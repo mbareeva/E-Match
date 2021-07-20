@@ -98,28 +98,42 @@ exports.loginViaFacebook = (req, res) => {
 
 exports.create = (req, res) => {
   let userData = req.session.user;
-  let media = req.session.media;
   req.body.fullname =  userData.name,
   req.body.biography = userData.biography,
   req.body.followers_count = userData.followers_count,
   req.body.website = userData.website,
   req.body.username = userData.username;
   //req.body.latestMedia = media;
+
+  
+
   let user = getUserParams(req.body);
   User.create(user).then((user) => {
-    console.log("user: ", user);
-    //req.locals.user = user;
-    user.latestMedia.push(media);
-    user.save();
-    res.redirect("/users/profile");
+    console.log("********** user **********: ", user);
+    res.redirect("/users/profile/" + user._id);
   })
   .catch(err => console.log("error says: ", err));
 }
 
+
 exports.index = (req, res, next) => {
   let userId = req.params.id;
-  console.log("USer ID: ", userId);
-  User.findById(userId)
+  let mediaArrForUser = [];
+
+  req.session.media.forEach(e => {
+    let mediaContent = new Media({
+      caption: e.caption,
+      likes: e.likes
+    });
+    mediaContent.save(result => {
+      mediaArrForUser.push(result);
+      console.log("RESULT: ", result);
+    })
+    .catch(err => console.log(err));
+  });
+  
+  console.log("User ID: ", userId);
+  User.findOneAndUpdate({_id: userId}, {$addToSet: {mediaArrForUser} })
       .then(user => {
         res.locals.user = user;
         next()
