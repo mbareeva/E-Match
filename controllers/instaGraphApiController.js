@@ -96,6 +96,7 @@ exports.loginViaFacebook = (req, res) => {
 exports.create = (req, res) => {
   let userData = req.session.user;
   let alreadySignedUp = req.body.username;
+  console.log(alreadySignedUp);
   let user;
   if (userData) {
     req.body.fullname = userData.name,
