@@ -102,7 +102,7 @@ exports.create = (req, res) => {
 
   let user = getUserParams(req.body);
   if (user) {
-    User.findOne({ _id: user.username }).then(data => {
+    User.findOne({ username: user.username }).then(data => {
       if (!data) {
         User.create(user).then((user) => {
           console.log("********** user **********: ", user);
