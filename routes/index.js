@@ -18,6 +18,7 @@ router.get('/handleauth', instaGraphApiController.getAccess);
 router.get('/auth/facebook', instaGraphApiController.getAuthorisationViaFacebook);
 router.get('/users/profile/:id', instaGraphApiController.index, instaGraphApiController.indexView);
 
+router.get('/users/matches/', matchesController.renderAllMatches); //tryout
 // router.get('/users/matches/', matchesController.getMatches, matchesController.renderAllMatches);
 // router.get('/users/matches/:userId', matchesController.getMatch, matchesController.renderSingleMatch);
 module.exports = router;

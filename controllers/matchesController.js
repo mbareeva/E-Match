@@ -13,9 +13,9 @@ module.exports = {
    * Get all recommendations for the logged in user.
    */
   renderAllMatches: (req, res) => {
-    if (res.locals.matches) {
-      res.render("matches/index")
-    }
+    // if (res.locals.matches) {
+    res.render("matches/index")
+    //}
   },
 
   /**
