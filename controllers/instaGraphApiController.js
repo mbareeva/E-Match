@@ -95,7 +95,7 @@ exports.loginViaFacebook = (req, res) => {
 
 exports.create = (req, res) => {
   let userData = req.session.user;
-  let alreadySignedUp = req.params.username;
+  let alreadySignedUp = req.body.username;
   let user;
   if (userData) {
     req.body.fullname = userData.name,
@@ -119,7 +119,6 @@ exports.create = (req, res) => {
       }
     })
   }
-
 }
 
 
