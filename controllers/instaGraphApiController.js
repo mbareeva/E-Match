@@ -107,7 +107,7 @@ exports.create = (req, res) => {
 
     user = getUserParams(req.body);
   }
-  if (user) {
+  if (alreadySignedUp) {
     User.findOne({ username: alreadySignedUp }).then(data => {
       if (!data) {
         User.create(user).then((user) => {
