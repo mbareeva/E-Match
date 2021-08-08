@@ -95,15 +95,19 @@ exports.loginViaFacebook = (req, res) => {
 
 exports.create = (req, res) => {
   let userData = req.session.user;
-  req.body.fullname = userData.name,
-    req.body.biography = userData.biography,
-    req.body.followers_count = userData.followers_count,
-    req.body.website = userData.website,
-    req.body.username = userData.username;
+  let alreadySignedUp = req.params.username;
+  let user;
+  if (userData) {
+    req.body.fullname = userData.name,
+      req.body.biography = userData.biography,
+      req.body.followers_count = userData.followers_count,
+      req.body.website = userData.website,
+      req.body.username = userData.username;
 
-  let user = getUserParams(req.body);
+    user = getUserParams(req.body);
+  }
   if (user) {
-    User.findOne({ username: user.username }).then(data => {
+    User.findOne({ username: alreadySignedUp }).then(data => {
       if (!data) {
         User.create(user).then((user) => {
           console.log("********** user **********: ", user);
