@@ -126,24 +126,26 @@ exports.create = (req, res) => {
 exports.index = (req, res, next) => {
   let userId = req.params.id;
   let mediaArrForUser = [];
-
-  req.session.media.forEach(e => {
-    let mediaContent = new Media({
-      caption: e.caption,
-      likes: e.likes
+  let savedMedia = req.session.media;
+  if (savedMedia) {
+    req.session.media.forEach(e => {
+      let mediaContent = new Media({
+        caption: e.caption,
+        likes: e.likes
+      });
+      mediaContent.save();
+      mediaArrForUser.push(mediaContent);
+      console.log("RESULT: ", mediaContent);
     });
-    mediaContent.save();
-    mediaArrForUser.push(mediaContent);
-    console.log("RESULT: ", mediaContent);
-  });
 
-  console.log("User ID: ", userId);
-  User.findOneAndUpdate({ _id: userId }, { $addToSet: { latestMedia: mediaArrForUser } }, { new: true })
-    .then(user => {
-      res.locals.user = user;
-      next()
-    })
-    .catch(err => console.log(err));
+    console.log("User ID: ", userId);
+    User.findOneAndUpdate({ _id: userId }, { $addToSet: { latestMedia: mediaArrForUser } }, { new: true })
+      .then(user => {
+        res.locals.user = user;
+        next()
+      })
+      .catch(err => console.log(err));
+  }
 }
 
 exports.indexView = (req, res) => {
