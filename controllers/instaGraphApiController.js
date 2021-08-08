@@ -101,10 +101,20 @@ exports.create = (req, res) => {
     req.body.username = userData.username;
 
   let user = getUserParams(req.body);
-  User.create(user).then((user) => {
-    console.log("********** user **********: ", user);
-    res.redirect("/users/profile/" + user._id);
-  })
+  if (user) {
+    User.findOne({ _id: user.username }).then(data => {
+      if (!data) {
+        User.create(user).then((user) => {
+          console.log("********** user **********: ", user);
+          res.redirect("/users/profile/" + user._id);
+        })
+      } else {
+        console.log("********** user **********: ", data);
+        res.redirect("/users/profile/" + data._id);
+      }
+    })
+  }
+
 }
 
 

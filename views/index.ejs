@@ -1,171 +1,230 @@
-<div id="carouselExampleControls" class="carousel slide" data-interval="false">
-  <form action="/users/create" method="post">
-  <div class="carousel-inner input-fields">
-    <div class="carousel-item active">
-      <div class="input-group mb-3">
-          <div class="col-md-4 offset-md-4">
-            <div class="card text-center mt-4">
-              <% if(!userFB) { %>
-              <a href="/login/facebook" class="btn btn-primary btn-block">
-                Login with Facebook
-              </a>
-              <% } else { %>
-                <a href="/login/facebook" class="btn btn-primary btn-block">
-                  Succesfuly authorized via FB!
-                </a>
-              <% } %>
+<div>
+  <% if(!userFB) { %>
+    <!-- Bootstrap template for login. Login: https://jsfiddle.net/StartBootstrap/amxr8n19/-->
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+          <div class="card border-0 shadow rounded-3 my-5">
+            <div class="card-body p-4 p-sm-5">
+              <h5 class="card-title text-center mb-5 fw-light fs-5">Sign In</h5>
+              <form>
+                <div class="form-floating mb-3">
+                  <label for="floatingInput">@username</label>
+                  <input type="text" class="form-control" id="floatingInput"
+                    placeholder="max.mustermann">
+                </div>
+                <div class="d-grid">
+                  <button class="btn btn-primary btn-login text-uppercase
+                    fw-bold" type="submit">Sign
+                    in</button>
+                </div>
+                <hr class="my-4">
+                <div class="d-grid">
+                  <a href="/login/facebook">
+                    <button class="btn btn-facebook btn-login text-uppercase
+                      fw-bold" type="button">
+                      <i class="fab fa-facebook-f me-2"></i> Sign up with
+                      Facebook
+                    </button>
+                  </a>
+                </div>
+              </form>
             </div>
           </div>
-      </div>
-    </div>
-   
-    
-    <div class="carousel-item">
-      <label for="basic-url" class="form-label">Whats's your location?</label>
-      <input type="text" class="form-control" name="location" placeholder="Location" aria-label="location"
-        aria-describedby="basic-addon1">
-
-    </div>
-
-    <div class="carousel-item">
-      <label for="basic-url" class="form-label">Category of your profile?</label>
-      <p class="category">Please, choose one category:</p>
-
-      <div class="form-group">
-        <div class="form-check">
-          <input class="form-check-input" type="radio" value="Personal blog" name="profileCategory" id="flexRadioDefault1"  checked>
-          <label class="form-check-label" for="flexRadioDefault1">
-            Personal blog
-          </label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" value="Product/Service" name="profileCategory" id="flexRadioDefault2">
-          <label class="form-check-label" for="flexRadioDefault2">
-            Product/Service
-          </label>
-        </div>
-
-        <div class="form-check">
-          <input class="form-check-input" type="radio" value="Art" name="profileCategory" id="flexRadioDefault2">
-          <label class="form-check-label" for="flexRadioDefault2">
-            Art
-          </label>
-        </div>
-
-        <div class="form-check">
-          <input class="form-check-input" type="radio" value="Musician/Band" name="profileCategory" id="flexRadioDefault2">
-          <label class="form-check-label" for="flexRadioDefault2">
-            Musician/Band
-          </label>
-        </div>
-
-        <div class="form-check">
-          <input class="form-check-input" type="radio" value="Shopping & Retail" name="profileCategory" id="flexRadioDefault2">
-          <label class="form-check-label" for="flexRadioDefault2">
-            Shopping & Retail
-          </label>
-        </div>
-
-        <div class="form-check">
-          <input class="form-check-input" type="radio" value="Health & Beauty" name="profileCategory" id="flexRadioDefault2">
-          <label class="form-check-label" for="flexRadioDefault2">
-            Health & Beauty
-          </label>
-        </div>
-
-        <div class="form-check">
-          <input class="form-check-input" type="radio" value="Grocery Store" name="profileCategory" id="flexRadioDefault2">
-          <label class="form-check-label" for="flexRadioDefault2">
-            Grocery Store
-          </label>
         </div>
       </div>
-
     </div>
-    <div class="carousel-item">
-      <label for="basic-url" class="form-label">What are your interests/field of specialisation?</label>
-      <p class="category">Please, choose several categories:</p>
 
-      <div class="form-group">
-        <div class="form-check">
-          <input class="form-check-input" type="radio" value="Business & Industry" name="interest" id="flexRadioDefault1"  checked>
-          <label class="form-check-label" for="flexRadioDefault1">
-            Business and industry
-          </label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" value="Entertainment" name="interest" id="flexRadioDefault2">
-          <label class="form-check-label" for="flexRadioDefault2">
-            Entertainment
-          </label>
-        </div>
+    <% } else { %>
 
-        <div class="form-check">
-          <input class="form-check-input" type="radio" value="Family & Relationships" name="interest" id="flexRadioDefault2">
-          <label class="form-check-label" for="flexRadioDefault2">
-            Family and relationships
-          </label>
-        </div>
+      <div id="carouselExampleControls" class="carousel slide"
+        data-interval="false">
+        <form action="/users/create" method="post">
+          <div class="carousel-inner input-fields">
+            <div class="carousel-item active">
+              <div class="input-group mb-3">
+                <div class="col-md-4 offset-md-4">
+                  <div class="card text-center mt-4">
+                    <a href="/login/facebook" class="btn btn-primary btn-block">
+                      Succesfuly authorized via FB!
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-        <div class="form-check">
-          <input class="form-check-input" type="radio" value="Fitness & Wellness" name="interest" id="flexRadioDefault2">
-          <label class="form-check-label" for="flexRadioDefault2">
-            Fitness and wellness
-          </label>
-        </div>
 
-        <div class="form-check">
-          <input class="form-check-input" type="radio" value="Food & Drink" name="interest" id="flexRadioDefault2">
-          <label class="form-check-label" for="flexRadioDefault2">
-            Food and drink
-          </label>
-        </div>
+            <div class="carousel-item">
+              <label for="basic-url" class="form-label">Whats's your location?</label>
+              <input type="text" class="form-control" name="location"
+                placeholder="Location" aria-label="location"
+                aria-describedby="basic-addon1">
 
-        <div class="form-check">
-          <input class="form-check-input" type="radio" value="Hobbies & Activities" name="interest" id="flexRadioDefault2">
-          <label class="form-check-label" for="flexRadioDefault2">
-            Hobbies and activities
-          </label>
-        </div>
+            </div>
 
-        <div class="form-check">
-          <input class="form-check-input" type="radio" value="Shopping & Fashion" name="interest" id="flexRadioDefault2">
-          <label class="form-check-label" for="flexRadioDefault2">
-            Shopping and fashion
-          </label>
-        </div>
+            <div class="carousel-item">
+              <label for="basic-url" class="form-label">Category of your
+                profile?</label>
+              <p class="category">Please, choose one category:</p>
+
+              <div class="form-group">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" value="Personal
+                    blog" name="profileCategory" id="flexRadioDefault1" checked>
+                  <label class="form-check-label" for="flexRadioDefault1">
+                    Personal blog
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio"
+                    value="Product/Service" name="profileCategory"
+                    id="flexRadioDefault2">
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Product/Service
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" value="Art"
+                    name="profileCategory" id="flexRadioDefault2">
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Art
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio"
+                    value="Musician/Band" name="profileCategory"
+                    id="flexRadioDefault2">
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Musician/Band
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" value="Shopping &
+                    Retail" name="profileCategory" id="flexRadioDefault2">
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Shopping & Retail
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" value="Health &
+                    Beauty" name="profileCategory" id="flexRadioDefault2">
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Health & Beauty
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" value="Grocery
+                    Store" name="profileCategory" id="flexRadioDefault2">
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Grocery Store
+                  </label>
+                </div>
+              </div>
+
+            </div>
+            <div class="carousel-item">
+              <label for="basic-url" class="form-label">What are your
+                interests/field of specialisation?</label>
+              <p class="category">Please, choose several categories:</p>
+
+              <div class="form-group">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" value="Business &
+                    Industry" name="interest" id="flexRadioDefault1" checked>
+                  <label class="form-check-label" for="flexRadioDefault1">
+                    Business and industry
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio"
+                    value="Entertainment" name="interest"
+                    id="flexRadioDefault2">
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Entertainment
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" value="Family &
+                    Relationships" name="interest" id="flexRadioDefault2">
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Family and relationships
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" value="Fitness &
+                    Wellness" name="interest" id="flexRadioDefault2">
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Fitness and wellness
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" value="Food &
+                    Drink" name="interest" id="flexRadioDefault2">
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Food and drink
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" value="Hobbies &
+                    Activities" name="interest" id="flexRadioDefault2">
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Hobbies and activities
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" value="Shopping &
+                    Fashion" name="interest" id="flexRadioDefault2">
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Shopping and fashion
+                  </label>
+                </div>
+              </div>
+
+            </div>
+            <div class="carousel-item">
+              <label for="basic-url" class="form-label">Whats's your role?</label>
+              <div class="form-group">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" value="business"
+                    name="role" id="flexRadioDefault1" checked>
+                  <label class="form-check-label" for="flexRadioDefault1">
+                    I am a businessman/businesswoman.
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio"
+                    value="influencer" name="role" id="flexRadioDefault2">
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    I am an influencer.
+                  </label>
+                </div>
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary">Sign in</button>
+              </div>
+            </div>
+          </div>
+          <a class="carousel-control-prev" href="#carouselExampleControls"
+            role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#carouselExampleControls"
+            role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </form>
       </div>
-
-    </div>
-    <div class="carousel-item">
-      <label for="basic-url" class="form-label">Whats's your role?</label>
-      <div class="form-group">
-        <div class="form-check">
-          <input class="form-check-input" type="radio" value="business" name="role" id="flexRadioDefault1"  checked>
-          <label class="form-check-label" for="flexRadioDefault1">
-            I am a businessman/businesswoman.
-          </label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" value="influencer" name="role" id="flexRadioDefault2">
-          <label class="form-check-label" for="flexRadioDefault2">
-            I am an influencer.
-          </label>
-        </div>
+      <% } %>
       </div>
-      <div class="col-12">
-        <button type="submit" class="btn btn-primary">Sign in</button>
-      </div>
-    </div>
-  </div>
-  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
- 
-</form>
-</div>
