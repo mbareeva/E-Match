@@ -4,7 +4,6 @@ const { Client } = require('elasticsearch');
 const bonsai = process.env.BONSAI_URL || "http://localhost:9200";
 const client = new Client({ host: bonsai });
 const graphApiController = require("./instaGraphApiController");
-const { index, next } = require("cheerio/lib/api/traversing");
 //The controller where the query is defined that generated the matches for business profile
 //in Instagram.
 module.exports = {
