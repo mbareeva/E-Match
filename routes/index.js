@@ -4,7 +4,6 @@ const instaGraphApiController = require('../controllers/instaGraphApiController'
 const instaBasicApiController = require('../controllers/instaBasicApiController');
 const matchesController = require('../controllers/matchesController');
 const userController = require('../controllers/userController');
-cobst userController = require('../controllers/userController')
 
 //// INSGTAGRAM BASIC API /////
 router.get('/auth/instagram', instaBasicApiController.getAuthorisationCode);
