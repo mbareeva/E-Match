@@ -80,6 +80,7 @@ exports.getAccess = async (req, res) => {
     let mediaIdData = await getAllMediaId(userId, token);
     let mediaDetailedInfo = await getAllMediaData(mediaIdData.data.data, token);
     req.session.media = mediaDetailedInfo;
+    console.log(mediaDetailedInfo)
     req.session.user = personalBusinessData.data;
     res.locals.userFB = personalBusinessData.data;
     res.render('index');
@@ -143,10 +144,19 @@ exports.index = (req, res, next) => {
 
 exports.indexView = (req, res) => {
   console.log("IndexView: ", req.body);
-  res.render("profile", {
-    user: req.session.user,
-    posts: req.session.media
-  })
+  if (!req.session.user) {
+    User.findOne({ username: req.params.username }).then(thisUser => {
+      res.render("profile", {
+        user: thisUser,
+        posts: thisUser.latestMedia
+      })
+    })
+  } else {
+    res.render("profile", {
+      user: req.session.user,
+      posts: req.session.media
+    })
+  }
 }
 
 // *** HELPER FUNCTIONS *** //
