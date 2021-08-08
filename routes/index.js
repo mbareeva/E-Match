@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const instaGraphApiController = require('../controllers/instaGraphApiController');
 const instaBasicApiController = require('../controllers/instaBasicApiController');
+const matchesController = require('../controllers/matchesController');
 
 //// INSGTAGRAM BASIC API /////
 router.get('/auth/instagram', instaBasicApiController.getAuthorisationCode);
@@ -16,4 +17,7 @@ router.get('/login/facebook', instaGraphApiController.loginViaFacebook);
 router.get('/handleauth', instaGraphApiController.getAccess);
 router.get('/auth/facebook', instaGraphApiController.getAuthorisationViaFacebook);
 router.get('/users/profile/:id', instaGraphApiController.index, instaGraphApiController.indexView);
+
+// router.get('/users/matches/', matchesController.getMatches, matchesController.renderAllMatches);
+// router.get('/users/matches/:userId', matchesController.getMatch, matchesController.renderSingleMatch);
 module.exports = router;

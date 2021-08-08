@@ -3,6 +3,10 @@ const mongoose = require("mongoose"),
   mediaSchema = mongoose.Schema({
     caption: String,
     likes: Number,
+    commentCount: Number,
+    keywords: [{
+      type: String
+    }],
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User"

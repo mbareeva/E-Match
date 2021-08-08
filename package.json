@@ -20,7 +20,7 @@
     "@elastic/elasticsearch": "^7.13.0",
     "axios": "^0.21.1",
     "bootstrap": "^5.0.1",
-    "cheerio": "^1.0.0-rc.9",
+    "cheerio": "^1.0.0-rc.10",
     "cookie-parser": "^1.4.5",
     "cookie-session": "^1.4.0",
     "ejs": "^3.1.6",
@@ -37,6 +37,7 @@
     "node-instagram": "^4.3.0",
     "prompts": "^2.4.1",
     "qs": "^6.10.1",
+    "request": "^2.88.2",
     "request-promise": "^4.2.6",
     "scraper-instagram": "^1.0.17"
   },

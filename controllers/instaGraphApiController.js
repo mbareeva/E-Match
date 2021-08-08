@@ -8,16 +8,16 @@ const appSecret = process.env.APP_SECRET;
 
 getUserParams = (body) => {
   return {
-      fullname: body.fullname,
-      biography: body.biography,
-      followers_count: body.followers_count,
-      website: body.website,
-      profileCategory: body.profileCategory,
-      specialisation: body.interest,
-      location: body.location,
-      username: body.username,
-      role: body.role
-    }
+    fullname: body.fullname,
+    biography: body.biography,
+    followers_count: body.followers_count,
+    website: body.website,
+    profileCategory: body.profileCategory,
+    specialisation: body.interest,
+    location: body.location,
+    username: body.username,
+    role: body.role
+  }
 };
 
 exports.getStart = (req, res) => {
@@ -94,11 +94,11 @@ exports.loginViaFacebook = (req, res) => {
 
 exports.create = (req, res) => {
   let userData = req.session.user;
-  req.body.fullname =  userData.name,
-  req.body.biography = userData.biography,
-  req.body.followers_count = userData.followers_count,
-  req.body.website = userData.website,
-  req.body.username = userData.username;
+  req.body.fullname = userData.name,
+    req.body.biography = userData.biography,
+    req.body.followers_count = userData.followers_count,
+    req.body.website = userData.website,
+    req.body.username = userData.username;
 
   let user = getUserParams(req.body);
   User.create(user).then((user) => {
@@ -119,23 +119,23 @@ exports.index = (req, res, next) => {
     });
     mediaContent.save();
     mediaArrForUser.push(mediaContent);
-      console.log("RESULT: ", mediaContent);
+    console.log("RESULT: ", mediaContent);
   });
-  
+
   console.log("User ID: ", userId);
-  User.findOneAndUpdate({_id: userId}, {$addToSet: {latestMEdia : mediaArrForUser}}, { new: true })
-      .then(user => {
-        res.locals.user = user;
-        next()
-      })
-      .catch(err => console.log(err));
+  User.findOneAndUpdate({ _id: userId }, { $addToSet: { latestMedia: mediaArrForUser } }, { new: true })
+    .then(user => {
+      res.locals.user = user;
+      next()
+    })
+    .catch(err => console.log(err));
 }
 
 exports.indexView = (req, res) => {
   console.log("IndexView: ", req.body);
   res.render("profile", {
-       user: req.session.user,
-       posts: req.session.media
+    user: req.session.user,
+    posts: req.session.media
   })
 }
 
@@ -209,12 +209,12 @@ async function getAllMediaId(userId, token) {
  */
 async function getAllMediaData(array, token) {
   let mediaDetailedInfo = [];
-  for(const media of array) {
-    if(media.id) {
+  for (const media of array) {
+    if (media.id) {
       let mediaInfoReq = {
         method: 'get',
         url: 'https://graph.facebook.com/v10.0/' + media.id + '?fields=owner,caption,like_count&access_token=' + token,
-        headers: { 
+        headers: {
           'Authorization': 'Bearer ' + token
         }
       }
