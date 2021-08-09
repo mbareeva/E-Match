@@ -12,8 +12,8 @@ getUserParams = (body) => {
     biography: body.biography,
     followers_count: body.followers_count,
     website: body.website,
-    profileCategory: body.profileCategory,
-    specialisation: body.interest,
+    specialisation: body.specialisation,
+    interest: body.interest,
     location: body.location,
     username: body.username,
     role: body.role
