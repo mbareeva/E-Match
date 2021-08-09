@@ -142,6 +142,7 @@ exports.index = (req, res, next) => {
   let userId = req.params.id;
   let mediaArrForUser = [];
   let savedMedia = req.session.media;
+  console.log(savedMedia)
   if (savedMedia) {
     req.session.media.forEach(e => {
       let mediaContent = new Media({
