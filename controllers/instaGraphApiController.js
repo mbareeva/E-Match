@@ -145,7 +145,10 @@ exports.index = (req, res, next) => {
         next()
       })
       .catch(err => console.log(err));
+  } else {
+    next()
   }
+
 }
 
 exports.indexView = async (req, res) => {
