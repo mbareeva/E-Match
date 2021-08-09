@@ -10,7 +10,8 @@
               <form action="/users/create" method="post">
                 <div class="form-floating mb-3">
                   <label for="floatingInput">@username</label>
-                  <input type="text" name="username" class="form-control" id="floatingInput"
+                  <input type="text" name="username" class="form-control"
+                    id="floatingInput"
                     placeholder="max.mustermann">
                 </div>
                 <div class="d-grid">
@@ -41,7 +42,7 @@
         data-interval="false">
         <form action="/users/create" method="post">
           <div class="carousel-inner input-fields">
-            <div class="carousel-item active">
+            <!-- <div class="carousel-item active">
               <div class="input-group mb-3">
                 <div class="col-md-4 offset-md-4">
                   <div class="card text-center mt-4">
@@ -51,44 +52,34 @@
                   </div>
                 </div>
               </div>
-            </div>
-
-
+            </div> -->
             <div class="carousel-item">
               <label for="basic-url" class="form-label">Whats's your location?</label>
               <input type="text" class="form-control" name="location"
                 placeholder="Location" aria-label="location"
                 aria-describedby="basic-addon1">
-
             </div>
 
             <div class="carousel-item">
-              <label for="basic-url" class="form-label">Category of your
+              <label for="basic-url" class="form-label">Category or
+                Specialisation of your
                 profile?</label>
-              <p class="category">Please, choose one category:</p>
-
+              <p class="category">Please, choose one category that best describes what you do:</p>
               <div class="form-group">
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" value="Personal
-                    blog" name="profileCategory" id="flexRadioDefault1" checked>
-                  <label class="form-check-label" for="flexRadioDefault1">
-                    Personal blog
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio"
-                    value="Product/Service" name="profileCategory"
-                    id="flexRadioDefault2">
-                  <label class="form-check-label" for="flexRadioDefault2">
-                    Product/Service
-                  </label>
-                </div>
-
                 <div class="form-check">
                   <input class="form-check-input" type="radio" value="Art"
                     name="profileCategory" id="flexRadioDefault2">
                   <label class="form-check-label" for="flexRadioDefault2">
-                    Art
+                    Artist
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio"
+                    value="Photographer" name="profileCategory"
+                    id="flexRadioDefault2">
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Athlete
                   </label>
                 </div>
 
@@ -102,10 +93,56 @@
                 </div>
 
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" value="Shopping &
-                    Retail" name="profileCategory" id="flexRadioDefault2">
+                  <input class="form-check-input" type="radio"
+                    value="Blogger" name="profileCategory"
+                    id="flexRadioDefault2">
                   <label class="form-check-label" for="flexRadioDefault2">
-                    Shopping & Retail
+                    Blogger
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio"
+                    value="Clothing" name="profileCategory"
+                    id="flexRadioDefault2">
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Clothing (Brand)
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio"
+                    value="Community" name="profileCategory"
+                    id="flexRadioDefault2">
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Community
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio"
+                    value="Musician/Band" name="profileCategory"
+                    id="flexRadioDefault2">
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Digital Creator
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio"
+                    value="Musician/Band" name="profileCategory"
+                    id="flexRadioDefault2">
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Education
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio"
+                    value="Musician/Band" name="profileCategory"
+                    id="flexRadioDefault2">
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Entepreneur
                   </label>
                 </div>
 
@@ -113,7 +150,68 @@
                   <input class="form-check-input" type="radio" value="Health &
                     Beauty" name="profileCategory" id="flexRadioDefault2">
                   <label class="form-check-label" for="flexRadioDefault2">
-                    Health & Beauty
+                    Health/Beauty
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" value="Editor"
+                    name="profileCategory" id="flexRadioDefault2">
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Editor
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" value="Writer"
+                    name="profileCategory" id="flexRadioDefault2">
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Writer
+                  </label>
+                </div>
+
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" value="Personal
+                    blog" name="profileCategory" id="flexRadioDefault1" checked>
+                  <label class="form-check-label" for="flexRadioDefault1">
+                    Personal blog
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio"
+                    value="Product/Service" name="profileCategory"
+                    id="flexRadioDefault2">
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Product/Service
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio"
+                    value="Product/Service" name="profileCategory"
+                    id="flexRadioDefault2">
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Gamer
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio"
+                    value="Product/Service" name="profileCategory"
+                    id="flexRadioDefault2">
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Restaurant
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio"
+                    value="Product/Service" name="profileCategory"
+                    id="flexRadioDefault2">
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Beauty, Cosmetic & Personal Care
                   </label>
                 </div>
 
@@ -124,14 +222,39 @@
                     Grocery Store
                   </label>
                 </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio"
+                    value="Photographer" name="profileCategory"
+                    id="flexRadioDefault2">
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Photographer
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" value="Shopping &
+                    Retail" name="profileCategory" id="flexRadioDefault2">
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Shopping & Retail
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" value="Grocery
+                    Store" name="profileCategory" id="flexRadioDefault2">
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Video Creator
+                  </label>
+                </div>
+
               </div>
 
             </div>
             <div class="carousel-item">
               <label for="basic-url" class="form-label">What are your
-                interests/field of specialisation?</label>
-              <p class="category">Please, choose several categories:</p>
-
+                interests?</label>
+              <p class="category">Please, choose several points of interest:</p>
               <div class="form-group">
                 <div class="form-check">
                   <input class="form-check-input" type="radio" value="Business &
@@ -188,6 +311,8 @@
                     Shopping and fashion
                   </label>
                 </div>
+
+
               </div>
 
             </div>
