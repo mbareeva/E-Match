@@ -81,9 +81,9 @@ exports.getAccess = async (req, res) => {
     let mediaIdData = await getAllMediaId(userId, token);
     let mediaDetailedInfo = await getAllMediaData(mediaIdData.data.data, token);
     req.session.media = mediaDetailedInfo;
-    console.log(mediaDetailedInfo)
+    console.log("MEDIA", mediaDetailedInfo)
     req.session.user = personalBusinessData.data;
-    console.log(req.session.user)
+    console.log("USER", req.session.user)
     res.locals.userFB = personalBusinessData.data;
     res.render('index');
   } catch (err) {
