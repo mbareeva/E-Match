@@ -152,7 +152,7 @@ exports.indexView = (req, res) => {
   console.log("IndexView: ", req.body);
   if (!req.session.user) {
     User.findOne({ username: req.params.username }).then(thisUser => {
-      let latestMedia = thisUser.latestMedia.forEach(mediaItem => Media.findById(mediaItem._id).then(e => { return e }));
+      let latestMedia = thisUser.latestMedia.forEach(mediaItem => Media.findById(mediaItem._id).then(e => { console.log("E", 2); return e }));
       console.log("latest media: ", latestMedia)
       res.render("profile", {
         user: thisUser,
