@@ -97,7 +97,7 @@ exports.loginViaFacebook = (req, res) => {
 exports.create = (req, res) => {
   let userData = req.session.user;
 
-  console.log(alreadySignedUp);
+
   let user;
   console.log("Body spec: ", userData)
   console.log("Body spec: ", req.body.specialisation)
@@ -112,6 +112,7 @@ exports.create = (req, res) => {
     user = getUserParams(req.body);
   }
   let alreadySignedUp = req.body.username;
+  console.log(alreadySignedUp);
   if (alreadySignedUp) {
     User.findOne({ username: alreadySignedUp }).then(data => {
       if (!data) {
