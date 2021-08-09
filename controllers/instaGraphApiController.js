@@ -152,9 +152,11 @@ exports.indexView = (req, res) => {
   console.log("IndexView: ", req.body);
   if (!req.session.user) {
     User.findOne({ username: req.params.username }).then(thisUser => {
+      let latestMedia = thisUser.latestMedia.map(mediaItem => Media.findById(mediaItem._id).then(e => { return e }));
+      console.log("latest media: ", latestMedia)
       res.render("profile", {
         user: thisUser,
-        posts: thisUser.latestMedia
+        posts: latestMedia
       })
     })
   } else {
