@@ -83,6 +83,7 @@ exports.getAccess = async (req, res) => {
     req.session.media = mediaDetailedInfo;
     console.log(mediaDetailedInfo)
     req.session.user = personalBusinessData.data;
+    console.log(req.session.user)
     res.locals.userFB = personalBusinessData.data;
     res.render('index');
   } catch (err) {
@@ -96,11 +97,9 @@ exports.loginViaFacebook = (req, res) => {
 
 exports.create = (req, res) => {
   let userData = req.session.user;
-
-
   let user;
   console.log("Body spec: ", userData)
-  console.log("Body spec: ", req.body.specialisation)
+
   if (userData) {
     req.body.fullname = userData.name,
       req.body.biography = userData.biography,
