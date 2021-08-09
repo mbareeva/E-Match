@@ -147,14 +147,13 @@ exports.index = (req, res, next) => {
     req.session.media.forEach(e => {
       let mediaContent = new Media({
         caption: e.caption,
-        likes: e.likes
+        likes: e.like_count,
+        commentCount: e.comment_count
       });
       mediaContent.save();
       mediaArrForUser.push(mediaContent);
-      console.log("RESULT: ", mediaContent);
     });
 
-    console.log("User ID: ", userId);
     User.findOneAndUpdate({ _id: userId }, { $addToSet: { latestMedia: mediaArrForUser } }, { new: true })
       .then(user => {
         res.locals.user = user;
@@ -257,7 +256,7 @@ async function getAllMediaData(array, token) {
     if (media.id) {
       let mediaInfoReq = {
         method: 'get',
-        url: 'https://graph.facebook.com/v10.0/' + media.id + '?fields=owner,caption,like_count&access_token=' + token,
+        url: 'https://graph.facebook.com/v10.0/' + media.id + '?fields=owner,caption,like_count,comments_count&access_token=' + token,
         headers: {
           'Authorization': 'Bearer ' + token
         }
