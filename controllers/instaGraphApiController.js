@@ -115,7 +115,7 @@ exports.create = (req, res) => {
           res.redirect("/users/profile/" + user._id);
         })
       } else {
-        res.session.user = data;
+        req.session.user = data;
         console.log("********** user **********: ", data);
         res.redirect("/users/profile/" + data._id);
       }
