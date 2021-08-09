@@ -97,9 +97,10 @@ exports.loginViaFacebook = (req, res) => {
 
 exports.create = (req, res) => {
   let userData = req.session.user;
+  let alreadySignedUp = req.body.username; //username typed into login form
+  console.log(alreadySignedUp);
   let user;
-  console.log("Body spec: ", userData)
-
+  console.log("User info: ", userData)
   if (userData) {
     req.body.fullname = userData.name,
       req.body.biography = userData.biography,
@@ -110,24 +111,32 @@ exports.create = (req, res) => {
 
     user = getUserParams(req.body);
   }
-  let alreadySignedUp = req.body.username;
-  console.log(alreadySignedUp);
+
+
   if (alreadySignedUp) {
     User.findOne({ username: alreadySignedUp }).then(data => {
       if (!data) {
         User.create(user).then((user) => {
-          console.log("********** user **********: ", user);
           res.redirect("/users/profile/" + user._id);
         })
       } else {
         req.session.user = data;
-        console.log("********** user **********: ", data);
+        res.redirect("/users/profile/" + data._id);
+      }
+    })
+  } else {
+    User.findOne({ username: userData.username }).then(data => {
+      if (!data) {
+        User.create(user).then((user) => {
+          res.redirect("/users/profile/" + user._id);
+        })
+      } else {
+        req.session.user = data;
         res.redirect("/users/profile/" + data._id);
       }
     })
   }
 }
-
 
 exports.index = (req, res, next) => {
   let userId = req.params.id;
@@ -158,7 +167,6 @@ exports.index = (req, res, next) => {
 }
 
 exports.indexView = async (req, res) => {
-  console.log("IndexView: ", req.body);
   if (!req.session.media) {
     Media.find({ _id: { $in: req.session.user.latestMedia } }).then(medias => {
       res.render("profile", {
