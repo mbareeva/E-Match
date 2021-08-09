@@ -115,7 +115,7 @@ exports.create = (req, res) => {
           res.redirect("/users/profile/" + user._id);
         })
       } else {
-        res.locals.user = data;
+        res.session.user = data;
         console.log("********** user **********: ", data);
         res.redirect("/users/profile/" + data._id);
       }
@@ -155,13 +155,12 @@ exports.index = (req, res, next) => {
 exports.indexView = async (req, res) => {
   console.log("IndexView: ", req.body);
   if (!req.session.media) {
-    Media.find({ _id: { $in: res.locals.user.latestMedia } }).then(medias => {
+    Media.find({ _id: { $in: res.session.user.latestMedia } }).then(medias => {
       res.render("profile", {
         user: thisUser,
         posts: medias
       })
     })
-
   } else {
     res.render("profile", {
       user: req.session.user,
