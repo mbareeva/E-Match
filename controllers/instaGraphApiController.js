@@ -148,15 +148,15 @@ exports.index = (req, res, next) => {
   }
 }
 
-exports.indexView = (req, res) => {
+exports.indexView = async (req, res) => {
   console.log("IndexView: ", req.body);
   if (!req.session.user) {
     User.findOne({ username: req.params.username }).then(thisUser => {
-      let latestMedia = thisUser.latestMedia.forEach(mediaItem => Media.findById(mediaItem._id).then(e => { console.log("E", 2); return e }));
-      console.log("latest media: ", latestMedia)
-      res.render("profile", {
-        user: thisUser,
-        posts: latestMedia
+      Media.find({ _id: { $in: thisUser.latestMedia } }).then(medias => {
+        res.render("profile", {
+          user: thisUser,
+          posts: media
+        })
       })
     })
   } else {
