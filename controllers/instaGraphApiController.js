@@ -155,7 +155,7 @@ exports.index = (req, res, next) => {
 exports.indexView = async (req, res) => {
   console.log("IndexView: ", req.body);
   if (!req.session.media) {
-    Media.find({ _id: { $in: res.session.user.latestMedia } }).then(medias => {
+    Media.find({ _id: { $in: req.session.user.latestMedia } }).then(medias => {
       res.render("profile", {
         user: thisUser,
         posts: medias
