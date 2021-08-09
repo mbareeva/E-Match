@@ -11,6 +11,7 @@ getUserParams = (body) => {
     fullname: body.fullname,
     biography: body.biography,
     followers_count: body.followers_count,
+    follows_count: body.follows_count,
     website: body.website,
     specialisation: body.specialisation,
     interest: body.interest,
@@ -102,6 +103,7 @@ exports.create = (req, res) => {
     req.body.fullname = userData.name,
       req.body.biography = userData.biography,
       req.body.followers_count = userData.followers_count,
+      req.body.follows_count = userData.follows_count,
       req.body.website = userData.website,
       req.body.username = userData.username;
 
