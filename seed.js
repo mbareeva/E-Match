@@ -48,7 +48,7 @@ let addMedias = async (arr, user) => {
     let mediaParams = {
       caption: media.caption,
       likes: media.likes,
-      commentsCount: media.commentsCount
+      commentCount: media.commentsCount
     }
     return await new Media(mediaParams).save()
   })
