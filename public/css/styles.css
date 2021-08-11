@@ -40,11 +40,12 @@ body{
 .media-title {
   color: white;
   margin-top: 10px;
+  text-align: center;
 }
 
 .button-matches {
   height: 50px;
-  margin: 40px;
+  width: 150px;
 }
 
 .profile-card {
@@ -86,9 +87,22 @@ body{
   -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
   box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
   border: none;
-  margin-bottom: 30px;
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
+  min-width: 80%;
+}
+
+.description {
+  color: #999 !important;
+  font-weight: 300 !important;
+  text-align: center !important;
+}
+.align-button {
+  display: flex;
+  justify-content: center;
+}
+h6 {
+  font-weight: 500;
 }
 
 .card .card-header {
@@ -181,17 +195,10 @@ body{
   color: #fff;
 }
 
-.bg-c-blue {
-  background: linear-gradient(45deg,#4099ff,#73b4ff);
+.bg-c-violet {
+  background: linear-gradient(45deg,#5847ec,#a484fa);
 }
 
-.bg-c-green {
-  background: linear-gradient(45deg,#2ed8b6,#59e0c5);
-}
-
-.bg-c-yellow {
-  background: linear-gradient(45deg,#FFB64D,#ffcb80);
-}
 
 .bg-c-pink {
   background: linear-gradient(45deg,#FF5370,#ff869a);
@@ -251,4 +258,29 @@ body{
   position: absolute;
   left: 0;
   z-index: 10;
+}
+
+h1 .profile{
+  color: #fff;
+  padding: 10px 0;
+}
+
+.card-profile {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  border: none;
+  background: white;
+
+}
+.card-profile:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.4);
+}
+.card-profile a {
+  color: initial;
+}
+.card-profile a:hover {
+  text-decoration: initial;
+}
+.card-profile .text-muted i {
+  margin: 0 10px;
 }
