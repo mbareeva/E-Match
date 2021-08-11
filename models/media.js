@@ -1,17 +1,20 @@
 const mongoose = require("mongoose"),
   mongoosastic = require("mongoosastic"),
-  mediaSchema = mongoose.Schema({
-    caption: String,
-    likes: Number,
-    commentCount: Number,
-    keywords: [{
-      type: String
-    }],
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User"
-    }
-  });
+  User = require("../models/user");
+mediaSchema = mongoose.Schema({
+  caption: String,
+  likes: Number,
+  commentCount: Number,
+  keywords: [{
+    type: String
+  }],
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    es_type: 'nested',
+    es_include_in_parent: true
+  }
+});
 
 const auth = process.env.BONSAI_AUTH || "";
 const port = process.env.BONSAI_PORT || "9200";
@@ -23,6 +26,9 @@ mediaSchema.plugin(mongoosastic, {
   "port": port,
   "auth": auth,
   "protocol": protocol,
+  populate: [
+    { path: 'user', select: "username _id followers_count biography specialisation location" }
+  ]
 });
 
 let Media = mongoose.model('Media', mediaSchema);

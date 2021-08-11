@@ -28,7 +28,6 @@ let deleteAll = () => {
     .exec()
     .then(() => {
       console.log("User data is empty!")
-      console.log("mongo address: ", MONGO_URI)
     })
 
   Media.deleteMany()
