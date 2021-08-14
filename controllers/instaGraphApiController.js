@@ -129,7 +129,7 @@ exports.create = (req, res) => {
 
         )
       } else {
-        req.session.user = data;
+        req.session.user = user;
         res.redirect("/users/profile/" + data._id);
       }
     }).catch(err => console.log(err));
