@@ -91,11 +91,11 @@ exports.create = (req, res) => {
       req.body.follows_count = userData.follows_count,
       req.body.website = userData.website,
       req.body.username = userData.username;
-    user = getUserParams(req.body);
+    user = new User(getUserParams(req.body));
     console.log("Specialisation: ", req.body.specialisation)
     User.findOne({ username: user.username }).then(user => {
       if (!user) {
-        User.register(new User({ username: req.body.username }), req.body.password).then((user) => {
+        User.register(user, req.body.password).then((user) => {
           let mediaArrForUser = [];
           console.log("NEw user: ", user)
           let savedMedia = req.session.media;
