@@ -20,8 +20,7 @@ module.exports = {
     })
       .then(user => {
         if (user) {
-          res.locals.user = user;
-          res.locals.media = user.latestMedia;
+          req.session.user = user;
           res.redirect("/users/profile/" + user._id);
           next();
         } else {
