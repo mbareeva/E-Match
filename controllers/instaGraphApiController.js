@@ -85,13 +85,19 @@ exports.create = (req, res) => {
   let user;
   console.log("User info: ", userData)
   if (userData) {
-    req.body.fullname = userData.name,
-      req.body.biography = userData.biography,
-      req.body.followers_count = userData.followers_count,
-      req.body.follows_count = userData.follows_count,
-      req.body.website = userData.website,
-      req.body.username = userData.username;
-    user = new User(getUserParams(req.body));
+
+    user = new User({
+      fullname: userData.fullname,
+      biography: userData.biography,
+      followers_count: userData.followers_count,
+      follows_count: userData.follows_count,
+      website: userData.website,
+      specialisation: req.body.specialisation,
+      interest: req.body.interest,
+      location: req.body.location,
+      username: userData.username,
+      role: req.body.role
+    });
     console.log("Specialisation: ", req.body.specialisation)
     console.log("password: ", req.body.password)
     User.findOne({ username: user.username }).then(user => {
