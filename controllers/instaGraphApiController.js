@@ -138,7 +138,7 @@ exports.create = (req, res) => {
 },
 
   exports.index = (req, res, next) => {
-    let user = req.locals.user;
+    let user = res.locals.user;
     Media.find({ _id: { $in: user.latestMedia } }).then(medias => {
       res.locals.media = medias;
       next()
