@@ -42,7 +42,8 @@
     "random-text-generator": "^3.2.1",
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
-    "scraper-instagram": "^1.0.17"
+    "scraper-instagram": "^1.0.17",
+    "connect-flash": "^0.1.1"
   },
   "devDependencies": {
     "connect-flash": "^0.1.1",
