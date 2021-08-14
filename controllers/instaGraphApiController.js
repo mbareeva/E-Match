@@ -97,6 +97,7 @@ exports.create = (req, res) => {
       if (!user) {
         User.register(new User({ username: req.body.username }), req.body.password).then((user) => {
           let mediaArrForUser = [];
+          console.log("NEw user: ", user)
           let savedMedia = req.session.media;
           if (savedMedia) {
             savedMedia.forEach(e => {
