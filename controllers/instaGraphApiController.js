@@ -130,7 +130,7 @@ exports.create = (req, res) => {
         )
       } else {
         req.session.user = user;
-        res.redirect("/users/profile/" + data._id);
+        res.redirect("/users/profile/" + user._id);
       }
     }).catch(err => console.log(err));
   } else {
