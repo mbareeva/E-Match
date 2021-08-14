@@ -23,29 +23,14 @@ getUserParams = (body) => {
 
 exports.getStart = (req, res) => {
   res.render('index', {
-    userFB: res.locals.userFB
+    userFB: res.locals.userFB,
+    appId: appId,
+    redirectUri: redirectUri
   });
 }
 
 exports.login = (req, res) => {
   res.redirect("/auth/facebook");
-}
-
-/**
- * Authorize a user with a help of authorization window from Instagram.
- * If the authorization is successful, the code is generated.
- */
-exports.getAuthorisationViaFacebook = (req, res) => {
-  res.send(`
-    <html>
-      <body>
-        <a class="btn btn-primary btn-block" href="https://www.facebook.com/v6.0/dialog/oauth?client_id=${appId}&r
-edirect_uri=${redirectUri}&response_type=code&scope=instagram_basic,pages_show_list">
-          Log In With Facebook
-        </a>
-      </body>
-    </html>
-  `)
 }
 
 /**
@@ -97,8 +82,6 @@ exports.loginViaFacebook = (req, res) => {
 
 exports.create = (req, res) => {
   let userData = req.session.user;
-  let alreadySignedUp = req.body.username; //username typed into login form
-  console.log(alreadySignedUp);
   let user;
   console.log("User info: ", userData)
   if (userData) {
@@ -108,79 +91,71 @@ exports.create = (req, res) => {
       req.body.follows_count = userData.follows_count,
       req.body.website = userData.website,
       req.body.username = userData.username;
-
     user = getUserParams(req.body);
-  }
 
+    User.findOne({ username: user.username }).then(user => {
+      if (!user) {
+        User.register(user, req.body.password).then((user) => {
+          let mediaArrForUser = [];
+          let savedMedia = req.session.media;
+          if (savedMedia) {
+            savedMedia.forEach(e => {
+              //fill the Media object with data from Instagram.
+              let mediaContent = new Media({
+                caption: e.caption,
+                likes: e.like_count,
+                commentCount: e.comment_count
+              });
+              mediaContent.save();
+              mediaArrForUser.push(mediaContent);
+            });
 
-  if (alreadySignedUp) {
-    User.findOne({ username: alreadySignedUp }).then(data => {
-      if (!data) {
-        User.create(user).then((user) => {
-          res.redirect("/users/profile/" + user._id);
-        })
+            User.findOneAndUpdate({ _id: user._id }, { $addToSet: { latestMedia: mediaArrForUser } }, { new: true })
+              .then(user => {
+                req.flash("success", "Account created successfully!")
+                res.locals.user = user;
+                res.redirect("/users/profile/" + user._id);
+              })
+              .catch(err => {
+                req.flash("error", "Failed to create a user account!");
+                console.log(err)
+              });
+          }
+        }).catch(err => {
+          req.flash("error", `Failed to create a new user account because: ${err.message}.`)
+          res.redirect("/");
+        }
+
+        )
       } else {
         req.session.user = data;
         res.redirect("/users/profile/" + data._id);
       }
-    })
+    }).catch(err => console.log(err));
   } else {
-    User.findOne({ username: userData.username }).then(data => {
-      if (!data) {
-        User.create(user).then((user) => {
-          res.redirect("/users/profile/" + user._id);
-        })
-      } else {
-        req.session.user = data;
-        res.redirect("/users/profile/" + data._id);
-      }
-    })
+    res.redirect("/");
   }
-}
+},
 
-exports.index = (req, res, next) => {
-  let userId = req.params.id;
-  let mediaArrForUser = [];
-  let savedMedia = req.session.media;
-  console.log(savedMedia)
-  if (savedMedia) {
-    req.session.media.forEach(e => {
-      let mediaContent = new Media({
-        caption: e.caption,
-        likes: e.like_count,
-        commentCount: e.comment_count
-      });
-      mediaContent.save();
-      mediaArrForUser.push(mediaContent);
-    });
+  exports.index = (req, res, next) => {
+    let user = req.locals.user;
+    Media.find({ _id: { $in: user.latestMedia } }).then(medias => {
+      res.locals.media = medias;
+      next()
+    }).catch(err => console.log(err));
+  },
 
-    User.findOneAndUpdate({ _id: userId }, { $addToSet: { latestMedia: mediaArrForUser } }, { new: true })
-      .then(user => {
-        res.locals.user = user;
-        next()
-      })
-      .catch(err => console.log(err));
-  } else {
-    next()
-  }
-
-}
-
-exports.indexView = async (req, res) => {
-  if (!req.session.media) {
-    Media.find({ _id: { $in: req.session.user.latestMedia } }).then(medias => {
+  exports.indexView = async (req, res) => {
+    if (res.locals.media && res.locals.user) {
       res.render("profile", {
-        user: req.session.user,
-        posts: medias
+        user: res.locals.user,
+        posts: res.locals.media
       })
-    })
-  } else {
-    res.render("profile", {
-      user: req.session.user,
-      posts: req.session.media
-    })
+    } else {
+      res.redirect('/')
+    }
   }
-}
+
 
 // *** HELPER FUNCTIONS *** //
 

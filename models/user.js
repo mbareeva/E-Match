@@ -1,5 +1,6 @@
 const mongoose = require("mongoose"),
   mongoosastic = require("mongoosastic"),
+  passportLocalMongoose = require("passport-local-mongoose"),
   Media = require("../models/media");
 //const passport = require("passport");
 //passportLocalMongoose = require("passport-local-mongoose");
@@ -39,18 +40,13 @@ userSchema = mongoose.Schema({
   }
 });
 
-// get the full name of the candidate.
-userSchema.virtual('fullName')
-  .get(function () {
-    return `${this.name.firstname} ${this.name.lastname}`;
-  });
-
+//  *****  Retrieve auth credentials from bonsai elasticsearch add-on  ***** //
 const auth = process.env.BONSAI_AUTH || "";
 const port = process.env.BONSAI_PORT || "9200";
 const protocol = process.env.BONSAI_PROTOCOL || "";
 const host = process.env.BONSAI_HOST || "localhost";
 
-//connect to elasticsearch using mongoosastic plugin
+// ***** connect to elasticsearch using mongoosastic plugin ***** 
 userSchema.plugin(mongoosastic, {
   "host": host,
   "port": port,
@@ -61,8 +57,12 @@ userSchema.plugin(mongoosastic, {
   ]
 });
 
+//  ***** Password hashing and storage. username as the user login parameter  ***** //
+userSchema.plugin(passportLocalMongoose, { usernameField: "username" });
+
 let User = mongoose.model('User', userSchema);
-//create a mapping
+
+//  ***** create a mapping  ***** 
 User.createMapping((err, mapping) => {
   console.log('** elasticsearch mapping created for Users');
 })
