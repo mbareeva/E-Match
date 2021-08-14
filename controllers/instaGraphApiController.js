@@ -82,12 +82,8 @@ exports.loginViaFacebook = (req, res) => {
 
 exports.create = (req, res) => {
   let userData = req.session.user;
-  let user;
-  console.log("User info: ", userData)
   if (userData) {
-    console.log("Specialisation: ", req.body.specialisation)
-    console.log("user: ", user)
-    User.findOne({ username: user.username }).then(user => {
+    User.findOne({ username: userData.username }).then(user => {
       if (!user) {
         User.register({
           fullname: userData.fullname,
