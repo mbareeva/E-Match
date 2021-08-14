@@ -92,7 +92,7 @@ exports.create = (req, res) => {
       req.body.website = userData.website,
       req.body.username = userData.username;
     user = getUserParams(req.body);
-    console.log(getUserParams)
+    console.log("Specialisation: ", req.body.specialisation)
     User.findOne({ username: user.username }).then(user => {
       if (!user) {
         User.register(new User({ username: req.body.username }), req.body.password).then((user) => {
@@ -114,7 +114,6 @@ exports.create = (req, res) => {
               .then(user => {
                 req.flash("success", "Account created successfully!")
                 req.session.user = user;
-                console.log("Locals user: ", res.locals.user)
                 res.redirect("/users/profile/" + user._id);
               })
               .catch(err => {
@@ -159,7 +158,6 @@ exports.create = (req, res) => {
       res.redirect('/')
     }
   }
-
 
 // *** HELPER FUNCTIONS *** //
 
