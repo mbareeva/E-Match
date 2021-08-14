@@ -99,7 +99,7 @@ exports.create = (req, res) => {
       role: req.body.role
     });
     console.log("Specialisation: ", req.body.specialisation)
-    console.log("password: ", req.body.password)
+    console.log("user: ", req.body.password)
     User.findOne({ username: user.username }).then(user => {
       if (!user) {
         User.register(user, req.body.password).then((user) => {
