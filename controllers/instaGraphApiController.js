@@ -92,7 +92,7 @@ exports.create = (req, res) => {
       req.body.website = userData.website,
       req.body.username = userData.username;
     user = getUserParams(req.body);
-
+    console.log(getUserParams)
     User.findOne({ username: user.username }).then(user => {
       if (!user) {
         User.register(new User({ username: req.body.username }), req.body.password).then((user) => {
@@ -113,7 +113,7 @@ exports.create = (req, res) => {
             User.findOneAndUpdate({ _id: user._id }, { $addToSet: { latestMedia: mediaArrForUser } }, { new: true })
               .then(user => {
                 req.flash("success", "Account created successfully!")
-                res.locals.user = user;
+                req.session.user = user;
                 console.log("Locals user: ", res.locals.user)
                 res.redirect("/users/profile/" + user._id);
               })
@@ -139,10 +139,11 @@ exports.create = (req, res) => {
 },
 
   exports.index = (req, res, next) => {
-    let username = res.locals.user.username;
+    let username = req.session.user.username;
     User.findOne({ username: username }).then(user => {
       Media.find({ _id: { $in: user.latestMedia } }).then(medias => {
         res.locals.media = medias;
+        res.locals.user = user;
         next()
       }).catch(err => console.log(err));
     })
