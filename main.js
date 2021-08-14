@@ -47,7 +47,6 @@ app.use(expressSession({
 app.use(connectFlash());
 
 //  ***** Passport authentification ***** //
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(User.createStrategy());

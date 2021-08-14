@@ -102,7 +102,19 @@ exports.create = (req, res) => {
     console.log("user: ", user)
     User.findOne({ username: user.username }).then(user => {
       if (!user) {
-        User.register(user, req.body.password).then((user) => {
+        User.register({
+          fullname: userData.fullname,
+          biography: userData.biography,
+          followers_count: userData.followers_count,
+          follows_count: userData.follows_count,
+          website: userData.website,
+          specialisation: req.body.specialisation,
+          interest: req.body.interest,
+          location: req.body.location,
+          username: userData.username,
+          role: req.body.role,
+          password: req.body.password
+        }, req.body.password).then((user) => {
           let mediaArrForUser = [];
           console.log("NEw user: ", user)
           let savedMedia = req.session.media;
