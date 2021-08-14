@@ -93,6 +93,7 @@ exports.create = (req, res) => {
       req.body.username = userData.username;
     user = new User(getUserParams(req.body));
     console.log("Specialisation: ", req.body.specialisation)
+    console.log("password: ", req.body.password)
     User.findOne({ username: user.username }).then(user => {
       if (!user) {
         User.register(user, req.body.password).then((user) => {
