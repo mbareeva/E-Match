@@ -1,7 +1,7 @@
 const express = require('express'),
   morgan = require('morgan'),
   session = require('cookie-session'),
-  connectFlash = require("connect-flash"),
+  connectFlash = require('connect-flash'),
   expressSession = require('express-session'),
   cookieParser = require('cookie-parser'),
   path = require('path'),
