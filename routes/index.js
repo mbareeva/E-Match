@@ -12,7 +12,7 @@ router.get('/login/facebook', instaGraphApiController.loginViaFacebook);
 
 //// Facebook GRAPH API////
 router.get('/', instaGraphApiController.getStart);
-router.post('users/login', userController.authenticate)
+router.post('/users/login', userController.authenticate)
 router.post('/users/create', instaGraphApiController.create);
 router.get('/users/logout', userController.logout);
 
