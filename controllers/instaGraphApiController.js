@@ -85,19 +85,6 @@ exports.create = (req, res) => {
   let user;
   console.log("User info: ", userData)
   if (userData) {
-
-    user = new User({
-      fullname: userData.fullname,
-      biography: userData.biography,
-      followers_count: userData.followers_count,
-      follows_count: userData.follows_count,
-      website: userData.website,
-      specialisation: req.body.specialisation,
-      interest: req.body.interest,
-      location: req.body.location,
-      username: userData.username,
-      role: req.body.role
-    });
     console.log("Specialisation: ", req.body.specialisation)
     console.log("user: ", user)
     User.findOne({ username: user.username }).then(user => {
@@ -124,7 +111,7 @@ exports.create = (req, res) => {
               let mediaContent = new Media({
                 caption: e.caption,
                 likes: e.like_count,
-                commentCount: e.comment_count
+                commentCount: e.comments_count
               });
               mediaContent.save();
               mediaArrForUser.push(mediaContent);
