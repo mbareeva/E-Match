@@ -138,11 +138,13 @@ exports.create = (req, res) => {
 },
 
   exports.index = (req, res, next) => {
-    let user = res.locals.user;
-    Media.find({ _id: { $in: user.latestMedia } }).then(medias => {
-      res.locals.media = medias;
-      next()
-    }).catch(err => console.log(err));
+    let username = res.locals.user.username;
+    User.findOne({ username: username }).then(user => {
+      Media.find({ _id: { $in: user.latestMedia } }).then(medias => {
+        res.locals.media = medias;
+        next()
+      }).catch(err => console.log(err));
+    })
   },
 
   exports.indexView = async (req, res) => {
