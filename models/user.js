@@ -58,7 +58,7 @@ userSchema.plugin(mongoosastic, {
 });
 
 //  ***** Password hashing and storage. username as the user login parameter  ***** //
-userSchema.plugin(passportLocalMongoose, { usernameField: "username" });
+userSchema.plugin(passportLocalMongoose);
 
 let User = mongoose.model('User', userSchema);
 

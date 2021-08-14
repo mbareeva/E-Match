@@ -95,7 +95,7 @@ exports.create = (req, res) => {
 
     User.findOne({ username: user.username }).then(user => {
       if (!user) {
-        User.register(user, req.body.password).then((user) => {
+        User.register(new User({ username: req.body.username }), req.body.password).then((user) => {
           let mediaArrForUser = [];
           let savedMedia = req.session.media;
           if (savedMedia) {
