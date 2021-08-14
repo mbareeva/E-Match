@@ -144,6 +144,7 @@ exports.create = (req, res) => {
       Media.find({ _id: { $in: user.latestMedia } }).then(medias => {
         res.locals.media = medias;
         res.locals.user = user;
+        console.log("User in index method:", user);
         next()
       }).catch(err => console.log(err));
     })
