@@ -10,14 +10,12 @@
               <form action="/users/login" method="post">
                 <div class="form-floating mb-3">
                   <label for="floatingInput">@username</label>
-                  <input type="text" name="username" class="form-control"
-                    id="floatingInput"
+                  <input type="text" name="username" class="form-control" id="floatingInput"
                     placeholder="max.mustermann">
                 </div>
                 <div class="form-floating mb-3">
                   <label for="floatingInput">password</label>
-                  <input type="password" name="password" class="form-control"
-                    id="floatingInput">
+                  <input type="password" name="password" class="form-control" id="floatingInput">
                 </div>
                 <div class="d-grid">
                   <button class="btn btn-primary btn-login text-uppercase
@@ -26,7 +24,8 @@
                 </div>
                 <hr class="my-4">
                 <div class="d-grid">
-                  <a href="https://www.facebook.com/v6.0/dialog/oauth?client_id=<%= `${appId}` %>&redirect_uri=<%= `${redirectUri}` %>&response_type=code&scope=instagram_basic,pages_show_list">
+                  <a
+                    href="https://www.facebook.com/v6.0/dialog/oauth?client_id=<%= `${appId}` %>&redirect_uri=<%= `${redirectUri}` %>&response_type=code&scope=instagram_basic,pages_show_list">
                     <button class="btn btn-facebook btn-login text-uppercase
                       fw-bold" type="button">
                       <i class="fab fa-facebook-f me-2"></i> Sign up with
@@ -43,14 +42,12 @@
 
     <% } else { %>
 
-      <div id="carouselExampleControls" class="carousel slide"
-        data-interval="false">
+      <div id="carouselExampleControls" class="carousel slide" data-interval="false">
         <form action="/users/create" method="post">
           <div class="carousel-inner input-fields">
             <div class="carousel-item active">
               <label for="basic-url" class="form-label">Whats's your location?</label>
-              <input type="text" class="form-control" name="location"
-                placeholder="Location" aria-label="location"
+              <input type="text" class="form-control" name="location" placeholder="Location" aria-label="location"
                 aria-describedby="basic-addon1">
             </div>
 
@@ -59,130 +56,137 @@
                 Specialisation of your
                 profile?</label>
               <p class="category">Please, choose one category that best describes what you do:</p>
-                <select name="specialisation" class="ui search dropdown form-control">
-                 <option name="specialisation" value="Artist"><i class="af flag"></i>Artist</option>
-                 <option name="specialisation" value="Athlete"><i class="ax flag"></i>Athlete</option>
-                 <option name="specialisation" value="Musician/Band"><i class="al flag"></i>Musician/Band</option>
-                 <option name="specialisation" value="Blogger"><i class="dz flag"></i>Blogger</option>
-                 <option name="specialisation" value="Clothing (Brand)"><i class="dz flag"></i>Clothing (Brand)</option>
-                 <option name="specialisation" value="Community"><i class="dz flag"></i>Community</option>
-                 <option name="specialisation" value="Digital Creator"><i class="dz flag"></i>Digital Creator</option>
-                 <option name="specialisation" value="Education"><i class="dz flag"></i>Education</option>
-                 <option name="specialisation" value="Entepreneur"><i class="dz flag"></i>Entepreneur</option>
-                 <option name="specialisation" value="Health/Beauty"><i class="dz flag"></i>Health/Beauty</option>
-                 <option name="specialisation" value="Editor"><i class="dz flag"></i>Editor</option>
-                 <option name="specialisation" value="Writer"><i class="dz flag"></i> Writer</option>
-                 <option name="specialisation" value="Personal blog"><i class="dz flag"></i>Personal blog</option>
-                 <option name="specialisation" value="Product/Service"><i class="dz flag"></i>Product/Service</option>
-                 <option name="specialisation" value="Gamer"><i class="dz flag"></i>Gamer</option>
-                 <option name="specialisation" value="Restaurant"><i class="dz flag"></i>Restaurant</option>
-                 <option name="specialisation" value="Beauty, Cosmetic & Personal Care"><i class="dz flag"></i>Beauty, Cosmetic & Personal Care</option>
-                 <option name="specialisation" value="Grocery Store"><i class="dz flag"></i>Grocery Store</option>
-                 <option name="specialisation" value="Photographer"><i class="dz flag"></i>Photographer</option>
-                 <option name="specialisation" value="Shopping & Retail"><i class="dz flag"></i>Shopping & Retail</option>
-                 <option name="specialisation" value="Video Creator"><i class="dz flag"></i>Video Creator</div>
-                </select>
+              <select name="specialisation" class="ui search dropdown form-control">
+                <option name="specialisation" value="Artist"><i class="af flag"></i>Artist</option>
+                <option name="specialisation" value="Athlete"><i class="ax flag"></i>Athlete</option>
+                <option name="specialisation" value="Musician/Band"><i class="al flag"></i>Musician/Band</option>
+                <option name="specialisation" value="Blogger"><i class="dz flag"></i>Blogger</option>
+                <option name="specialisation" value="Clothing (Brand)"><i class="dz flag"></i>Clothing (Brand)</option>
+                <option name="specialisation" value="Community"><i class="dz flag"></i>Community</option>
+                <option name="specialisation" value="Digital Creator"><i class="dz flag"></i>Digital Creator</option>
+                <option name="specialisation" value="Education"><i class="dz flag"></i>Education</option>
+                <option name="specialisation" value="Entepreneur"><i class="dz flag"></i>Entepreneur</option>
+                <option name="specialisation" value="Health/Beauty"><i class="dz flag"></i>Health/Beauty</option>
+                <option name="specialisation" value="Editor"><i class="dz flag"></i>Editor</option>
+                <option name="specialisation" value="Writer"><i class="dz flag"></i> Writer</option>
+                <option name="specialisation" value="Personal blog"><i class="dz flag"></i>Personal blog</option>
+                <option name="specialisation" value="Product/Service"><i class="dz flag"></i>Product/Service</option>
+                <option name="specialisation" value="Gamer"><i class="dz flag"></i>Gamer</option>
+                <option name="specialisation" value="Restaurant"><i class="dz flag"></i>Restaurant</option>
+                <option name="specialisation" value="Beauty, Cosmetic & Personal Care"><i class="dz flag"></i>Beauty,
+                  Cosmetic & Personal Care</option>
+                <option name="specialisation" value="Grocery Store"><i class="dz flag"></i>Grocery Store</option>
+                <option name="specialisation" value="Photographer"><i class="dz flag"></i>Photographer</option>
+                <option name="specialisation" value="Shopping & Retail"><i class="dz flag"></i>Shopping & Retail
+                </option>
+                <option name="specialisation" value="Video Creator"><i class="dz flag"></i>Video Creator
+            </div>
+            </select>
           </div>
-           
-            <div class="carousel-item">
-              <label for="basic-url" class="form-label">What are your
-                interests?</label>
-              <p class="category">Please, choose several points of interest:</p>
-              <div class="form-group">
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" value="Business &
+
+          <div class="carousel-item">
+            <label for="basic-url" class="form-label">What are your
+              interests?</label>
+            <p class="category">Please, choose several points of interest:</p>
+            <div class="form-group">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" value="Business &
                     Industry" name="interest" id="flexRadioDefault1" checked>
-                  <label class="form-check-label" for="flexRadioDefault1">
-                    Business and industry
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio"
-                    value="Entertainment" name="interest"
-                    id="flexRadioDefault2">
-                  <label class="form-check-label" for="flexRadioDefault2">
-                    Entertainment
-                  </label>
-                </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" value="Family &
-                    Relationships" name="interest" id="flexRadioDefault2">
-                  <label class="form-check-label" for="flexRadioDefault2">
-                    Family and relationships
-                  </label>
-                </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" value="Fitness &
-                    Wellness" name="interest" id="flexRadioDefault2">
-                  <label class="form-check-label" for="flexRadioDefault2">
-                    Fitness and wellness
-                  </label>
-                </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" value="Food &
-                    Drink" name="interest" id="flexRadioDefault2">
-                  <label class="form-check-label" for="flexRadioDefault2">
-                    Food and drink
-                  </label>
-                </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" value="Hobbies &
-                    Activities" name="interest" id="flexRadioDefault2">
-                  <label class="form-check-label" for="flexRadioDefault2">
-                    Hobbies and activities
-                  </label>
-                </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" value="Shopping &
-                    Fashion" name="interest" id="flexRadioDefault2">
-                  <label class="form-check-label" for="flexRadioDefault2">
-                    Shopping and fashion
-                  </label>
-                </div>
-
-
+                <label class="form-check-label" for="flexRadioDefault1">
+                  Business and industry
+                </label>
               </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" value="Entertainment" name="interest"
+                  id="flexRadioDefault2">
+                <label class="form-check-label" for="flexRadioDefault2">
+                  Entertainment
+                </label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input" type="radio" value="Family &
+                    Relationships" name="interest" id="flexRadioDefault2">
+                <label class="form-check-label" for="flexRadioDefault2">
+                  Family and relationships
+                </label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input" type="radio" value="Fitness &
+                    Wellness" name="interest" id="flexRadioDefault2">
+                <label class="form-check-label" for="flexRadioDefault2">
+                  Fitness and wellness
+                </label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input" type="radio" value="Food &
+                    Drink" name="interest" id="flexRadioDefault2">
+                <label class="form-check-label" for="flexRadioDefault2">
+                  Food and drink
+                </label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input" type="radio" value="Hobbies &
+                    Activities" name="interest" id="flexRadioDefault2">
+                <label class="form-check-label" for="flexRadioDefault2">
+                  Hobbies and activities
+                </label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input" type="radio" value="Shopping &
+                    Fashion" name="interest" id="flexRadioDefault2">
+                <label class="form-check-label" for="flexRadioDefault2">
+                  Shopping and fashion
+                </label>
+              </div>
+
 
             </div>
-            <div class="carousel-item">
-              <label for="basic-url" class="form-label">Whats's your role?</label>
-              <div class="form-group">
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" value="business"
-                    name="role" id="flexRadioDefault1" checked>
-                  <label class="form-check-label" for="flexRadioDefault1">
-                    I am a businessman/businesswoman.
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio"
-                    value="influencer" name="role" id="flexRadioDefault2">
-                  <label class="form-check-label" for="flexRadioDefault2">
-                    I am an influencer.
-                  </label>
-                </div>
+
+          </div>
+          <div class="carousel-item">
+            <label for="basic-url" class="form-label">Whats's your role?</label>
+            <div class="form-group">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" value="business" name="role" id="flexRadioDefault1"
+                  checked>
+                <label class="form-check-label" for="flexRadioDefault1">
+                  I am a businessman/businesswoman.
+                </label>
               </div>
-              <div class="col-12">
-                <button type="submit" class="btn btn-primary">Sign up</button>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" value="influencer" name="role" id="flexRadioDefault2">
+                <label class="form-check-label" for="flexRadioDefault2">
+                  I am an influencer.
+                </label>
               </div>
             </div>
           </div>
-          <a class="carousel-control-prev" href="#carouselExampleControls"
-            role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-          </a>
-          <a class="carousel-control-next" href="#carouselExampleControls"
-            role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-          </a>
-        </form>
+
+          <div class="carousel-item">
+            <label for="basic-url" class="form-label">Type in your password, plaease: </label>
+            <div class="form-group">
+              <input type="password" class="form-control" name="password" placeholder="Password"
+                aria-describedby="basic-addon1">
+            </div>
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary">Sign up</button>
+            </div>
+          </div>
       </div>
-      <% } %>
-      </div>
+      <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+      </form>
+</div>
+<% } %>
+  </div>

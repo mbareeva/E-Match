@@ -82,21 +82,24 @@ exports.loginViaFacebook = (req, res) => {
 
 exports.create = (req, res) => {
   let userData = req.session.user;
-  let user;
-  console.log("User info: ", userData)
   if (userData) {
-    req.body.fullname = userData.name,
-      req.body.biography = userData.biography,
-      req.body.followers_count = userData.followers_count,
-      req.body.follows_count = userData.follows_count,
-      req.body.website = userData.website,
-      req.body.username = userData.username;
-    user = getUserParams(req.body);
-
-    User.findOne({ username: user.username }).then(user => {
+    User.findOne({ username: userData.username }).then(user => {
       if (!user) {
-        User.register(user, req.body.password).then((user) => {
+        User.register({
+          fullname: userData.fullname,
+          biography: userData.biography,
+          followers_count: userData.followers_count,
+          follows_count: userData.follows_count,
+          website: userData.website,
+          specialisation: req.body.specialisation,
+          interest: req.body.interest,
+          location: req.body.location,
+          username: userData.username,
+          role: req.body.role,
+          password: req.body.password
+        }, req.body.password).then((user) => {
           let mediaArrForUser = [];
+          console.log("NEw user: ", user)
           let savedMedia = req.session.media;
           if (savedMedia) {
             savedMedia.forEach(e => {
@@ -104,7 +107,7 @@ exports.create = (req, res) => {
               let mediaContent = new Media({
                 caption: e.caption,
                 likes: e.like_count,
-                commentCount: e.comment_count
+                commentCount: e.comments_count
               });
               mediaContent.save();
               mediaArrForUser.push(mediaContent);
@@ -113,7 +116,7 @@ exports.create = (req, res) => {
             User.findOneAndUpdate({ _id: user._id }, { $addToSet: { latestMedia: mediaArrForUser } }, { new: true })
               .then(user => {
                 req.flash("success", "Account created successfully!")
-                res.locals.user = user;
+                req.session.user = user;
                 res.redirect("/users/profile/" + user._id);
               })
               .catch(err => {
@@ -128,8 +131,8 @@ exports.create = (req, res) => {
 
         )
       } else {
-        req.session.user = data;
-        res.redirect("/users/profile/" + data._id);
+        req.session.user = user;
+        res.redirect("/users/profile/" + user._id);
       }
     }).catch(err => console.log(err));
   } else {
@@ -138,11 +141,15 @@ exports.create = (req, res) => {
 },
 
   exports.index = (req, res, next) => {
-    let user = req.locals.user;
-    Media.find({ _id: { $in: user.latestMedia } }).then(medias => {
-      res.locals.media = medias;
-      next()
-    }).catch(err => console.log(err));
+    let username = req.session.user.username;
+    User.findOne({ username: username }).then(user => {
+      Media.find({ _id: { $in: user.latestMedia } }).then(medias => {
+        res.locals.media = medias;
+        res.locals.user = user;
+        console.log("User in index method:", user);
+        next()
+      }).catch(err => console.log(err));
+    })
   },
 
   exports.indexView = async (req, res) => {
@@ -155,7 +162,6 @@ exports.create = (req, res) => {
       res.redirect('/')
     }
   }
-
 
 // *** HELPER FUNCTIONS *** //
 
