@@ -114,6 +114,7 @@ exports.create = (req, res) => {
               .then(user => {
                 req.flash("success", "Account created successfully!")
                 res.locals.user = user;
+                console.log("Locals user: ", res.locals.user)
                 res.redirect("/users/profile/" + user._id);
               })
               .catch(err => {
