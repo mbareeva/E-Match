@@ -37,7 +37,9 @@ userSchema = mongoose.Schema({
   role: {
     type: String,
     enum: ["business", "influencer"]
-  }
+  },
+  score: Number,
+  engagementRate: Number
 });
 
 //  *****  Retrieve auth credentials from bonsai elasticsearch add-on  ***** //
@@ -63,8 +65,43 @@ userSchema.plugin(passportLocalMongoose);
 let User = mongoose.model('User', userSchema);
 
 //  ***** create a mapping  ***** 
-User.createMapping((err, mapping) => {
-  console.log('** elasticsearch mapping created for Users');
+User.createMapping({
+  "analysis": {
+    "analyzer": {
+      "my_analyzer": {
+        "tokenizer": "standard",
+        "filter": [
+          "lowercase",
+          "my_stemmer",
+          "my_stopwords",
+          "synonym"
+        ]
+      }
+    },
+    "filter": {
+      "my_stemmer": {
+        "type": "stemmer",
+        "language": "light_english"
+      },
+      "my_stopwords": {
+        "type": "stop",
+        "stopwords": "_english_"
+      },
+      "synonym": {
+        "type": "synonym",
+        "synonyms": [
+          "gym, training, sport, workout",
+          "jumped, jump",
+          "priveleged, privelege, honor"
+        ]
+      }
+    }
+  }
+}, (err, mapping) => {
+  if (err) { 'error creating the mapping' }
+  else {
+    console.log('** elasticsearch mapping created for Users');
+  }
 })
 
 

@@ -61,7 +61,7 @@ let addUsers = (arr) => {
         let mediaParams = {
           caption: m.caption,
           likes: m.likes,
-          commentCount: m.commentsCount
+          commentCount: m.commentsCount || typeof m.commentsCount !== 'undefined' ? m.commentsCount : (Math.floor(Math.random() + (300 - 20 + 1) + 20))
         }
         //create Media
         new Media(mediaParams).save().then(media => {
@@ -85,7 +85,7 @@ let addUsers = (arr) => {
         console.error(error.message)
       });
   })
-  console.log(data.length);
+  console.log("Length: ", data.length);
   return data;
 }
 

@@ -298,3 +298,7 @@ h1 .profile{
 .error {
   background: rgba(209, 46, 42, 0.7);
 }
+
+.col-md-4{
+  margin-bottom: 10px;
+}

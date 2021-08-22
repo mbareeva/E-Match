@@ -18,8 +18,6 @@ router.get('/users/logout', userController.logout);
 
 router.get('/handleauth', instaGraphApiController.getAccess);
 router.get('/users/profile/:id', instaGraphApiController.index, instaGraphApiController.indexView);
-
-router.get('/users/matches/', matchesController.renderAllMatches); //tryout
-// router.get('/users/matches/', matchesController.getMatches, matchesController.renderAllMatches);
+router.get('/users/matches/:id', matchesController.getMatches, matchesController.renderAllMatches);
 // router.get('/users/matches/:userId', matchesController.getMatch, matchesController.renderSingleMatch);
 module.exports = router;

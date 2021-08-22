@@ -32,9 +32,9 @@ mediaSchema.plugin(mongoosastic, {
 });
 
 let Media = mongoose.model('Media', mediaSchema);
-Media.createMapping((err, mapping) => {
-  console.log('** elasticsearch mapping created for Medias');
-  console.log("***port: ", process.env.BONSAI_PORT)
-})
+// Media.createMapping((err, mapping) => {
+//   console.log('** elasticsearch mapping created for Medias');
+//   console.log("***port: ", process.env.BONSAI_PORT)
+// })
 
 module.exports = mongoose.model("Media", mediaSchema);
