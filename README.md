@@ -1,6 +1,6 @@
 # E-Match
 
-This project is aimed at the finding out whether Elasticsearch alone can create recommendations for the target user. The problem of recommendations is researched through a search lense to find out whether users with relevant content can be found using only Elasticsearch functions and techniques.
+This project is aimed at the finding out whether Elasticsearch (ES) alone can create recommendations for the target user. The problem of recommendations is researched through a search lense to find out whether users with relevant content can be found using only Elasticsearch functions and techniques. The search results of ES search are compare to the text similarity search based on sematics with help of pre-trained model of TensorFlow and Universal Sentence Encoder.
 The dataset is based on the public user profile data from the social network Instagram. The research also gives an overview on how to work with Instagram Graph API for requesting profile and media data (only public available data).
 
 ## To create indeces in ES
