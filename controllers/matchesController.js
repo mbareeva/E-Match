@@ -47,7 +47,6 @@ module.exports = {
         queryObject.location = thisUser.location
         queryObject.keywordsBio = thisUser.biography
         queryObject.unit_vector = thisUser.unit_vector
-        console.log(queryObject.unit_vector.length)
         queryObject.captions = "";
         mediaItems.forEach(item => {
           queryObject.captions += item.caption + ","
@@ -59,7 +58,7 @@ module.exports = {
             embeddings.array().then(data => {
               console.log("Vectors for the whole user unit: ", data[0].length)
               queryObject.unit_vector = data[0];
-              let query = module.exports.setQueryWithCosineSimilarity("users", queryObject, thisUser);
+              let query = module.exports.setQueryWithCosineSimilarity("users", queryObject);
               module.exports.sendQueryRequest(req, res, next, thisUser, query);
             });
           });
@@ -94,6 +93,15 @@ module.exports = {
             query: {
               bool: {
                 should: [
+                  {
+                    match: {
+                      "biography": {
+                        query: queryObject.keywordsBio,
+                        analyzer: "my_analyzer",
+                        boost: Math.pow(2, 2)
+                      }
+                    }
+                  },
                   {
                     match: {
                       "specialisation": {
@@ -163,14 +171,6 @@ module.exports = {
                   },
                   {
                     match: {
-                      "latestMedia.caption": {
-                        query: queryObject.captions,
-                        analyzer: "my_analyzer",
-                      }
-                    }
-                  },
-                  {
-                    match: {
                       "specialisation": {
                         query: queryObject.specialisation,
                         boost: Math.pow(2, 2)
@@ -192,6 +192,14 @@ module.exports = {
                       }
                     }
                   },
+                  {
+                    match: {
+                      "latestMedia.caption": {
+                        query: queryObject.captions,
+                        analyzer: "my_analyzer"
+                      }
+                    }
+                  }
                 ]
               }
             },
@@ -224,7 +232,6 @@ module.exports = {
         let data = result.hits.hits;
         let maxScore = result.hits.max_score;
         console.log("Max Score: ", maxScore)
-        console.log("Total matches count: ", data.length)
         let finalResult = [];
         if (data) {
           let matchesFound = data.map(async hit => {
