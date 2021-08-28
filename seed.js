@@ -6,8 +6,9 @@ const mongoose = require("mongoose"),
   mongoosastic = require("mongoosastic"),
   Media = require("./models/media"),
   User = require("./models/user");
-data = require("./scraper/cleaned.json");
+data = require("./scraper/vectors.json");
 const media = require("./models/media");
+const use = require('@tensorflow-models/universal-sentence-encoder');
 
 mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/e-match",
   { useNewUrlParser: true }
@@ -53,16 +54,20 @@ let addUsers = (arr) => {
       specialisation: user.specialisation,
       location: user.location,
       username: user.username,
+      unit_vector: user.unit_vector,
       role: user.role
     }
     new User(userParams).save().then(newUser => {
       //loop throught media in the given fake data.
+      let allCaptions = "";
       user.latestMedia.forEach(m => {
         let mediaParams = {
           caption: m.caption,
           likes: m.likes,
           commentCount: m.commentsCount || typeof m.commentsCount !== 'undefined' ? m.commentsCount : (Math.floor(Math.random() + (300 - 20 + 1) + 20))
         }
+        allCaptions += m.caption + ",";
+
         //create Media
         new Media(mediaParams).save().then(media => {
           //set the owner of the media
@@ -70,8 +75,7 @@ let addUsers = (arr) => {
             //push updated media to the array of total media items.
             //medias.push(updatedMedia);
             User.findOneAndUpdate({ username: newUser.username }, { $addToSet: { latestMedia: updatedMedia } }, { new: true }).then(result => {
-              //console.log("Result: ", result)
-              data.push(result)
+
             }).catch(error => {
               console.error(error.message)
             });
@@ -85,11 +89,9 @@ let addUsers = (arr) => {
         console.error(error.message)
       });
   })
-  console.log("Length: ", data.length);
   return data;
 }
 
 deleteAll()
 addUsers(data)
-
 

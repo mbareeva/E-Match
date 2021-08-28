@@ -1,13 +1,18 @@
+// Constants //
 const User = require("../models/user");
 const Media = require("../models/media");
 const { Client } = require('elasticsearch');
 const bonsai = process.env.BONSAI_URL || "http://localhost:9200";
 const client = new Client({ host: bonsai });
-//const graphApiController = require("./instaGraphApiController");
 const { query } = require("express");
 const user = require("../models/user");
-//The controller where the query is defined that generated the matches for business profile
-//in Instagram.
+const tf = require('@tensorflow/tfjs');
+const use = require('@tensorflow-models/universal-sentence-encoder');
+//
+//The controller where the query is defined that 
+//generates the matches for business profile in Instagram.
+// 
+
 module.exports = {
 
   /**
@@ -17,16 +22,6 @@ module.exports = {
     res.render("matches/index", {
       users: res.locals.matches
     })
-  },
-
-  /**
-   * Get a recommendation for the logged in user.
-   */
-  renderSingleMatch: (req, res) => {
-    res.render("matches",
-      {
-        userId: req.params.userId
-      });
   },
 
   /**
@@ -43,30 +38,32 @@ module.exports = {
       res.locals.user = thisUser;
       Media.find({ _id: { $in: thisUser.latestMedia } }).then(mediaItems => {
         res.locals.media = mediaItems;
-        //console.log("Check the media.locals: ", res.locals.media ? res.locals.media : "") // here maybe extracted keywords from captions
 
-        //Object definition for query later on.
+        // Object definition for query. //
         let queryObject = {}
-        //Keywords extraction according to NLTK Algorithm. Link to the library: ... !!!!.
-        //let keywordsBiography = { keywords: this.getKeywords(thisUser) };
-        //let keywordsCaptions = { keywords: this.getKeywords(mediaItems.caption) }
         //Push values to the object.
-        console.log("Specialisation: ", thisUser.specialisation)
         queryObject.specialisation = thisUser.specialisation
-
         queryObject.interest = thisUser.interest
         queryObject.location = thisUser.location
         queryObject.keywordsBio = thisUser.biography
-        // queryObject[keywordsMedia] = keywordsCaptions
+        queryObject.unit_vector = thisUser.unit_vector
+        console.log(queryObject.unit_vector.length)
         queryObject.captions = "";
         mediaItems.forEach(item => {
-          queryObject.captions += item.caption + " "
+          queryObject.captions += item.caption + ","
         })
-
-        //Set the query with the object with important values.
-        let query = module.exports.setQuery("users", queryObject, thisUser);
-
-        module.exports.sendQueryRequest(req, res, next, thisUser, query);
+        // Universal sentense encoder from TensorFlow.js. Extracts embeddings from the biography and captions.
+        use.load().then(model => {
+          const sentences = thisUser.biography + "," + queryObject.captions
+          model.embed(sentences).then(embeddings => {
+            embeddings.array().then(data => {
+              console.log("Vectors for the whole user unit: ", data[0].length)
+              queryObject.unit_vector = data[0];
+              let query = module.exports.setQueryWithCosineSimilarity("users", queryObject, thisUser);
+              module.exports.sendQueryRequest(req, res, next, thisUser, query);
+            });
+          });
+        });
       }).catch(error => {
         console.error(`Error while searching for media items.`, error);
       })
@@ -87,9 +84,8 @@ module.exports = {
    * 
    * @param {String} index The index for search query.
    * @param {Object} queryObject The values that user has in its profile.
-   * @param {Object} user The logged in user for whom the matches should be generated.
    */
-  setQuery: (index, queryObject, user) => {
+  setQuery: (index, queryObject) => {
     let query = {
       index: index,
       body: {
@@ -128,7 +124,34 @@ module.exports = {
                         analyzer: "my_analyzer"
                       }
                     }
-                  },
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+    return query;
+
+  },
+
+  /**
+     * Calculates the cosine similarity between query vector and document vector.
+     * The smaller the angle between the vectors, the more semantically similar they are to each other.
+     * @param {String} index The index for search query.
+     * @param {Object} queryObject The values that user has in its profile.
+     */
+  setQueryWithCosineSimilarity: (index, queryObject) => {
+    console.log(queryObject.unit_vector)
+    let query = {
+      index: index,
+      body: {
+        query: {
+          script_score: {
+            query: {
+              bool: {
+                should: [
                   {
                     match: {
                       "biography": {
@@ -137,27 +160,55 @@ module.exports = {
                         boost: Math.pow(2, 2)
                       }
                     }
-                  }
+                  },
+                  {
+                    match: {
+                      "latestMedia.caption": {
+                        query: queryObject.captions,
+                        analyzer: "my_analyzer",
+                      }
+                    }
+                  },
+                  {
+                    match: {
+                      "specialisation": {
+                        query: queryObject.specialisation,
+                        boost: Math.pow(2, 2)
+                      }
+                    }
+                  },
+                  {
+                    match: {
+                      "interest": {
+                        query: queryObject.interest,
+                        boost: Math.pow(2, 2)
+                      },
+                    }
+                  },
+                  {
+                    match: {
+                      "location": {
+                        query: queryObject.location
+                      }
+                    }
+                  },
                 ]
               }
+            },
+            script: {
+              "source": "cosineSimilarity(params.query_vector, 'unit_vector') + 1.0",
+              "params": {
+                "query_vector": queryObject.unit_vector
+              }
             }
-          },
-          // functions: [
-          //   {
-          //     script_score: {
-          //       script: {
-          //         source: (doc['likes'].value + doc['comments'] / doc['followers_count'].value * 100)
-          //       }
-          //     }
-          //   }
-          // ],
-          // boost: engagementRate,
-          // boost_mode: "sum"
+          }
         }
       }
     }
     return query;
   },
+
+
 
   /**
    * Sends the search API request to Elasticsearch index.
@@ -180,8 +231,7 @@ module.exports = {
             let user = await User.findById(hit._id);
             user.score = userScore(hit._score, maxScore);
             console.log("Score: ", user.score)
-            user.engagementRate = await getEngagementRate(user);
-            console.log("rate: ", user.engagementRate)
+            user.engagementRate = Math.round(await getEngagementRate(user));
             if (user.username !== thisUser.username)
               finalResult.push(user);
           })
@@ -198,6 +248,7 @@ module.exports = {
 }
 
 //////// HELPER FUNCTIONS ///////
+
 /**
   * Sorts users according to the relevance score.
   * @param {Object} results The matched user generated by Elasticsearch.
@@ -220,7 +271,6 @@ function userScore(userScore, maxScore) {
   return (userScore / maxScore * 100).toFixed(2);
 }
 
-
 /**
  * 
  * @param {Object} user The user whose engagement rate is calculated.
@@ -237,6 +287,7 @@ async function getEngagementRate(user) {
     })
     return totalLikes + totalCommentCount
   })
+
   let average = ((points) / user.followers_count) * 100;
   return average;
 }
