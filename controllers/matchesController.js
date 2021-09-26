@@ -58,7 +58,7 @@ module.exports = {
             embeddings.array().then(data => {
               console.log("Vectors for the whole user unit: ", data[0].length)
               queryObject.unit_vector = data[0];
-              let query = module.exports.setQueryWithCosineSimilarity("users", queryObject);
+              let query = module.exports.setQuery("users", queryObject);
               module.exports.sendQueryRequest(req, res, next, thisUser, query);
             });
           });
